@@ -1,0 +1,22 @@
+usecase_notation_extraction_task:
+  description: >
+    Given a set of software requirements, extract all the actors interacting
+    with the system and list their corresponding use cases.
+  expected_output: >
+    A structured JSON output containing extracted actors and their use cases.
+  agent: usecase_notation_extractor
+  
+diagram_task:
+  description: >
+    Using the extracted JSON data of actors and use cases, generate a Use Case Diagram using PlantUML 1.2025.1beta9 syntax.
+    
+  expected_output: >
+    A PlantUML 1.2025.1beta9 code snippet representing the Use Case Diagram.
+  agent: diagram_generator
+
+design:
+  description: >
+    Optimize the diagram layout for readability and professional presentation. improve the PlantUML code.
+  expected_output: >
+    A PlantUML 1.2025.1beta9 code snippet representing the Use Case Diagram.
+  agent: diagram_enhancer

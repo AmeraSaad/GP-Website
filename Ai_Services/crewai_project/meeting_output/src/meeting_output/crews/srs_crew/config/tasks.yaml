@@ -1,0 +1,15 @@
+
+srs_generation_task:
+  prompt_template: >
+    Given the following functional and non-functional requirements, generate a **precise and structured** Software Requirements Specification (SRS) document.\n\n
+    **Follow these strict guidelines:**\n
+    - **Do NOT introduce new requirements** beyond what is provided.\n
+    - **Expand each functional requirement with clear descriptions, inputs, outputs, and processes.**\n
+    - **Map every non-functional requirement directly to performance, security, scalability, usability, and compliance considerations.**\n
+    - **Maintain proper formatting with headings ('##'), subheadings ('###'), and bullet points ('- ').**\n\n
+    
+  description: >
+    Generates an SRS document that strictly adheres to the given requirements, ensuring technical accuracy and completeness.
+  expected_output: >
+    A structured, detailed, and technically accurate SRS document.
+  agent: srs_content_generator

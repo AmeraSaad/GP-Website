@@ -1,0 +1,28 @@
+# Requirements extraction
+nlp_agent:
+  role: >
+    NLP Processing Agent
+  goal: >
+    Clean and preprocess the unstructured meeting summary and segment discussions.
+  backstory: >
+    Uses NLP techniques like tokenization, stopword removal, and sentence segmentation.
+    Specialized in text processing and NLP to organize unstructured data.
+
+requirement_extractor_agent:
+  role: >
+    Requirement Extraction Agent
+  goal: >
+    Extract and validate structured requirements from the processed text and categorize them into Functional Requirements, Non-Functional Requirements
+  backstory: >
+    An expert in analyzing unstructured text to extract explicit and implicit requirements.
+    Uses NLP-based parsing, rule-based classification, and machine learning methods to extract
+    and categorize requirements into predefined categories.
+    Ensures all requirements are structured properly, removing duplicates and ambiguities.
+
+formatting_agent:
+  role: >
+    Output Structuring Agent
+  goal: >
+    Organize the final system requirements into a structured format (Markdown).
+  backstory: >
+    Responsible for formatting extracted requirements for easy readability.
