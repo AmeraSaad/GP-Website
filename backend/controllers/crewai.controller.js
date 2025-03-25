@@ -1,9 +1,10 @@
 // backend/controllers/crewaiController.js
 
 const axios = require("axios");
-const CrewAIOutput = require("../models/CrewAIOutput.model");
-const Summary  = require("../models/Summary.model");
+const CrewAIOutput = require("../models/crewAIOutput.model");
+const Summary  = require("../models/summary.model");
 
+// Create a new CrewAI output
 const runCrewAI = async (req, res) => {
   try {
     // 1. Extract the meeting summary from request body
@@ -58,4 +59,31 @@ const runCrewAI = async (req, res) => {
   }
 };
 
-module.exports = { runCrewAI };
+// Retrieve all CrewAI outputs
+const getAllCrewOutputs = async (req, res) => {
+  try {
+    const outputs = await CrewAIOutput.find().populate("summaryId");
+    return res.status(200).json({ success: true, data: outputs });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// Retrieve a specific CrewAI output by its ID
+const getCrewOutputById = async (req, res) => {
+  try {
+    const output = await CrewAIOutput.findById(req.params.id).populate("summaryId");
+    if (!output) {
+      return res.status(404).json({ success: false, message: "CrewAI output not found." });
+    }
+    return res.status(200).json({ success: true, data: output });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+module.exports = {
+  runCrewAI, 
+  getAllCrewOutputs,
+  getCrewOutputById,
+};

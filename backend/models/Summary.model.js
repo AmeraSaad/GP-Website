@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
 
 const SummarySchema = new mongoose.Schema({
-  meetingId: {
+  meetingRef: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Meeting",
-    required: false,
-    default: null
+    default: null,
   },
   summaryText: {
     type: String,

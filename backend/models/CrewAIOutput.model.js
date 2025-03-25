@@ -1,12 +1,6 @@
 const mongoose = require('mongoose');
 
 const CrewAIOutputSchema = new mongoose.Schema({
-  meetingId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Meeting",
-    required: false,
-    default: null
-  },
   summaryId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Summary",

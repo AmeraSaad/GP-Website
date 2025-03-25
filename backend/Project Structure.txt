@@ -1,0 +1,23 @@
+backend/
+│── db/
+│   └── connectDB.js        # MongoDB connection
+│
+│── models/                 # Mongoose Schemas
+│   ├── Meeting.js
+│   ├── Summary.js
+│   ├── UIDesign.js
+│   └── CrewAIOutput.js
+│
+│── controllers/            # Express Controllers
+│   ├── meetingController.js
+│   
+│   ├── uiDesignController.js
+│   └── crewAIController.js
+│
+│── routes/                 # Express Routes
+│   ├── meetingRoutes.js
+│   
+│   ├── uiDesignRoutes.js
+│   └── crewAIRoutes.js
+│
+└── server.js               # Main Express server

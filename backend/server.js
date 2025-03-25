@@ -4,7 +4,9 @@ const cors = require('cors');
 const path = require("path");
 const connectDB = require("./db/connectDB");
 
-const crewaiRoutes = require("./routes/crewaiRoutes");
+const crewaiRoutes = require("./routes/crewai.routes");
+const uiDesignRoutes = require("./routes/uIDesign.routes");
+const summaryRoutes = require("./routes/summary.routes");
 
 dotenv.config();
 
@@ -16,6 +18,8 @@ app.use(express.json());
 
 // Routes
 app.use("/api/crewai", crewaiRoutes);
+app.use("/api/ui-design", uiDesignRoutes);
+app.use("/api/summaries", summaryRoutes);
 
 // Serve static files if needed (for production)
 // app.use(express.static(path.join(__dirname, "public")));
