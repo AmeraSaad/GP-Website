@@ -7,6 +7,7 @@ const connectDB = require("./db/connectDB");
 const crewaiRoutes = require("./routes/crewai.routes");
 const uiDesignRoutes = require("./routes/uIDesign.routes");
 const summaryRoutes = require("./routes/summary.routes");
+const meetingRoutes = require("./routes/meeting.routes");
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use("/api/crewai", crewaiRoutes);
 app.use("/api/ui-design", uiDesignRoutes);
 app.use("/api/summaries", summaryRoutes);
+app.use("/api/meetings", meetingRoutes);
 
 // Serve static files if needed (for production)
 // app.use(express.static(path.join(__dirname, "public")));
