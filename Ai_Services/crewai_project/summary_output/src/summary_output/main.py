@@ -91,5 +91,5 @@ def plot():
     flow = SystemFlow()
     flow.plot()
 
-# if __name__ == "__main__":
-#     kickoff()
+if __name__ == "__main__":
+    kickoff()

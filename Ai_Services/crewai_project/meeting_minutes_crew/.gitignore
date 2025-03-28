@@ -1,0 +1,6 @@
+.env
+__pycache__/
+lib/
+.DS_Store
+.venv/
+transcript_MAN_annot09.txt
