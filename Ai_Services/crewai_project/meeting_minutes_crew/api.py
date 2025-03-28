@@ -13,7 +13,7 @@ app = FastAPI(
     version="1.0"
 )
 
-@app.post("/process")
+@app.post("/minutes_crew")
 async def process_transcript_api(input_data: TranscriptInput):
     transcript_text = input_data.transcript.strip()
     if not transcript_text:
@@ -31,4 +31,4 @@ async def process_transcript_api(input_data: TranscriptInput):
     return {"final_minutes": final_minutes}
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8001)
