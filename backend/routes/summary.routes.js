@@ -1,7 +1,7 @@
 // backend/routes/summaryRoutes.js
 const express = require("express");
 const router = express.Router();
-const { generateSummary, getAllSummaries, getSummaryById } = require("../controllers/summaryController");
+const { generateSummary, getAllSummaries, getSummaryById } = require("../controllers/summary.controller");
 
 // POST /api/summaries - Generate and save a summary from a transcript
 router.post("/", generateSummary);
