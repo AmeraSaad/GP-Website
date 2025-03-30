@@ -15,18 +15,19 @@ const processMeeting = async (req, res) => {
     let meetingDoc = await Meeting.create({ transcript, status: "uploaded" });
 
     // 2. Call the summarization endpoint to generate a summary
-    const fastApiUrl = process.env.FAST_API_URL || "http://127.0.0.1:8000";
-    const summaryResponse = await axios.post(`${fastApiUrl}/summarize`, { transcript });
+    const summaryMinutes_URL = process.env.summaryMinutes_URL || "https://5d57-34-116-82-196.ngrok-free.app";
+    const summaryMinutesResponse  = await axios.post(`${summaryMinutes_URL}/summaryMinutes`, { transcript });
     
-    if (!summaryResponse.data || !summaryResponse.data.summary) {
+    if (!summaryMinutesResponse.data || !summaryMinutesResponse.data.summary) {
       return res.status(500).json({ 
         success: false, 
         message: "Invalid response from summarization service." 
       });
     }
     
-    const summaryText = summaryResponse.data.summary;
-
+    // Extract the summary text and meeting minutes from the response
+    const { summary: summaryText, minutes } = summaryMinutesResponse.data;
+    
     // 3. Create a new Summary document linked to the meeting
     const newSummary = new Summary({
       meetingRef: meetingDoc._id,
@@ -34,14 +35,14 @@ const processMeeting = async (req, res) => {
     });
     await newSummary.save();
 
-    // Update meeting with the summary reference and new status
+    // Update meeting with the summary reference, meeting minutes, and update status to "summarized"
     meetingDoc.summary = newSummary._id;
+    meetingDoc.minutes = minutes;
     meetingDoc.status = "summarized";
     await meetingDoc.save();
 
-    // 4. Call the CrewAI endpoint using the generated summary text
+     // 4. Call the CrewAI endpoint using the generated summary text
     const crewAIResponse = await axios.post(`${fastApiUrl}/crewai-flow`, { meeting_summary: summaryText });
-    
     if (!crewAIResponse.data) {
       return res.status(500).json({
         success: false,
@@ -64,7 +65,8 @@ const processMeeting = async (req, res) => {
     meetingDoc.crewai_output = crewAIOutputDoc._id;
     meetingDoc.status = "processed";
     await meetingDoc.save();
-
+    
+    // Return the in-memory objects without re-querying the database
     return res.status(200).json({
       success: true,
       data: {

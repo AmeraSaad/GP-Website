@@ -11,6 +11,10 @@ const MeetingSchema = new mongoose.Schema({
     ref: "Summary",
     default: null,
   },
+  minutes: {
+    type: String,
+    default: null,
+  },
   crewai_output:{
     type: mongoose.Schema.Types.ObjectId,
     ref: "CrewAIOutput",
