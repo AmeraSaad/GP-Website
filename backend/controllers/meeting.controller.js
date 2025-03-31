@@ -42,6 +42,7 @@ const processMeeting = async (req, res) => {
     await meetingDoc.save();
 
      // 4. Call the CrewAI endpoint using the generated summary text
+    const fastApiUrl = process.env.FAST_API_URL || "http://127.0.0.1:8000";
     const crewAIResponse = await axios.post(`${fastApiUrl}/crewai-flow`, { meeting_summary: summaryText });
     if (!crewAIResponse.data) {
       return res.status(500).json({
