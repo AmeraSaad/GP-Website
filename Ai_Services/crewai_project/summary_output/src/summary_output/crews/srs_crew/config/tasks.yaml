@@ -1,15 +1,117 @@
-
-srs_generation_task:
-  prompt_template: >
-    Given the following functional and non-functional requirements, generate a **precise and structured** Software Requirements Specification (SRS) document.\n\n
-    **Follow these strict guidelines:**\n
-    - **Do NOT introduce new requirements** beyond what is provided.\n
-    - **Expand each functional requirement with clear descriptions, inputs, outputs, and processes.**\n
-    - **Map every non-functional requirement directly to performance, security, scalability, usability, and compliance considerations.**\n
-    - **Maintain proper formatting with headings ('##'), subheadings ('###'), and bullet points ('- ').**\n\n
-    
+content_task:
   description: >
-    Generates an SRS document that strictly adheres to the given requirements, ensuring technical accuracy and completeness.
+    Generate the Introduction, Overall Description, and Appendix sections of the Software Requirements Specification (SRS) document. 
+    These sections should include Purpose, Scope, Definitions, Acronyms, References, product perspective, functions, user characteristics, constraints, assumptions, and a glossary of terms or supporting content.
   expected_output: >
-    A structured, detailed, and technically accurate SRS document.
-  agent: srs_content_generator
+    A comprehensive, well-organized document section that introduces the system, describes its context and environment, and provides any supporting material (e.g., glossary or references) in professional IEEE format.
+  agent: content_agent
+
+requirements_task:
+  description: >
+    Generate both functional and non-functional requirements of the software system based on the extracted requirements and system goals. 
+    Functional requirements should be clear, testable, and organized logically. Non-functional requirements should be grouped by type (performance, security, usability, etc.).
+  expected_output: >
+    A well-formatted list of both functional and non-functional requirements written in IEEE-compliant style, with proper structure and categorization.
+  agent: requirements_agent
+
+assembly_task:
+  description: >
+    Combine the previously generated sections into a final Software Requirements Specification (SRS) document. Ensure consistent formatting, correct structure, logical ordering, and document polish.
+    apply this formate:
+      1. Introduction
+      1.1 Purpose
+      Describe the purpose of the SRS document.
+
+      Specify the intended audience (developers, testers, stakeholders).
+
+      1.2 Document Conventions
+      Define terminology, acronyms, and abbreviations.
+
+      Mention formatting standards (e.g., UML, tables, diagrams).
+
+      1.3 Intended Audience and Reading Suggestions
+      Identify who will use the document (developers, managers, clients).
+
+      Suggest how different readers should navigate the document.
+
+      1.4 Product Scope
+      Briefly describe the software product.
+
+      Explain its features, benefits, and objectives.
+
+      1.5 References
+      List all referenced documents (business requirements, standards, regulations).
+
+      2. Overall Description
+      2.1 Product Perspective
+      Explain how the system fits into the larger ecosystem.
+
+      Mention interactions with other systems (if any).
+
+      2.2 Product Features
+      High-level summary of key functionalities.
+
+      2.3 User Classes and Characteristics
+      Identify different user roles (admin, end-user, guest).
+
+      Describe their needs and constraints.
+
+      2.4 Operating Environment
+      Hardware, software, and network requirements.
+
+      Supported platforms (Windows, Linux, mobile, etc.).
+
+      2.5 Design and Implementation Constraints
+      Technology stack limitations.
+
+      Compliance requirements (security, regulatory).
+
+      2.6 User Documentation
+      List manuals, help guides, or training materials.
+
+      2.7 Assumptions and Dependencies
+      Underlying assumptions (e.g., internet availability).
+
+      External dependencies (third-party APIs, libraries).
+
+      3. System Features and Requirements
+      3.1 Functional Requirements
+      Detailed breakdown of each feature (use cases, user stories).
+
+      Format:
+
+      Requirement ID (e.g., FR-001)
+
+      Description
+
+      Priority (High/Medium/Low)
+
+      Input/Process/Output
+
+      3.3 Non-Functional Requirements
+      3.3.1 Performance Requirements
+      Response time, throughput, scalability.
+
+      3.3.2 Security Requirements
+      Authentication, encryption, data protection.
+
+      3.3.3 Reliability & Availability
+      Uptime expectations, backup policies.
+
+      3.3.4 Maintainability
+      Code documentation, modularity.
+
+      3.3.5 Portability
+      Cross-platform compatibility.
+
+      4. Conclution
+  expected_output: >
+    A complete and cohesive IEEE 830-compliant SRS document in Markdown format, ready for export or submission.
+  agent: editor_agent
+
+last_edits:
+  description: >
+    fill any gaps with the proper data, check all the data you have first.
+  expected_output: >
+    A complete and cohesive IEEE 830-compliant SRS document in Markdown format, ready for export or submission.
+  agent: editor_agent

@@ -14,6 +14,12 @@ groq_llm_1= LLM(
     api_key = os.getenv("GROQ_API_KEY1")
 )
 
+llm2 = LLM(
+        model="gemini/gemini-1.5-pro-latest",
+        temperature=0.7,
+        api_key="AIzaSyAwxdTXxF48JQZMJ5w5jzTfNtWOxHukync"
+    )
+
 @CrewBase
 class ReqCrew:
     """Crew responsible for extracting and formatting system requirements."""
@@ -45,6 +51,14 @@ class ReqCrew:
             llm=groq_llm_1
         )
 
+    @agent
+    def ui_requirement_agent(self) -> Agent:
+        """Agent responsible for extracting UI/UX specific requirements."""
+        return Agent(
+            config=self.agents_config["ui_requirement_agent"],
+            llm=llm2
+        )
+
     @task
     def nlp_task(self) -> Task:
         """Task to preprocess meeting summaries using NLP."""
@@ -64,6 +78,13 @@ class ReqCrew:
         """Task to format the extracted requirements."""
         return Task(
             config=self.tasks_config["formatting_task"],
+        )
+
+    @task
+    def ui_extraction_task(self) -> Task:
+        """Task to extract UI/UX specific requirements."""
+        return Task(
+            config=self.tasks_config["ui_extraction_task"],
         )
 
     @crew
