@@ -3,7 +3,6 @@ from crewai.project import CrewBase, agent, crew, task
 import os
 from dotenv import load_dotenv
 load_dotenv()
-
 # If you want to run a snippet of code before or after the crew starts,
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
@@ -13,6 +12,7 @@ groq_llm_1= LLM(
     temperature=0,
     api_key = os.getenv("GROQ_API_KEY3")
 )
+
 @CrewBase
 class ModelsCrew:
     """Crew responsible for generating UML diagrams from extracted requirements."""

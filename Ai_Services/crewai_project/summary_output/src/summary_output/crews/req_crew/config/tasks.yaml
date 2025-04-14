@@ -27,4 +27,24 @@ formatting_task:
     A. [Category Name]:\n [Requirement details]\n
     ...\n\n.
   agent: formatting_agent
+
+ui_extraction_task:
+  description: >
+    Extract and analyze UI/UX specific requirements from the processed text.
+    Focus on identifying:
+    - User interface components and layouts
+    - User interaction flows and navigation
+    - Visual design elements and styling
+    - Accessibility requirements
+    - Responsive design specifications
+    - User feedback mechanisms
+  expected_output: >
+    A structured list of UI/UX requirements categorized by:
+    - Interface Components
+    - User Flows
+    - Visual Design
+    - Accessibility
+    - Responsive Design
+    - User Interaction
+  agent: ui_requirement_agent
   
