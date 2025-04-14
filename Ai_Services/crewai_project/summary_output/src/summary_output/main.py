@@ -9,6 +9,7 @@ from crewai.flow.flow import Flow, listen, or_, start
 from crews.req_crew.req_crew import ReqCrew
 from crews.srs_crew.srs_crew import SrsCrew
 from crews.models_crew.models_crew import ModelsCrew
+from crews.ui_req.ui_req import UIReqCrew
 
 import os
 from datetime import datetime
@@ -22,6 +23,7 @@ class SystemState(BaseModel):
     extracted_requirements: str = ""
     srs_document: str = ""
     uml_diagram: str = ""
+    ui_specifications: str = ""
 
 
 class SystemFlow(Flow[SystemState]):
@@ -53,7 +55,7 @@ class SystemFlow(Flow[SystemState]):
     @listen(extract_requirements)
     def generate_uml_diagram(self):
         """Step 2b: Generate a UML Use Case Diagram from extracted requirements"""
-        print(" Generating UML Use Case Diagram...")
+        print("Generating UML Use Case Diagram...")
         result = (
             ModelsCrew()
             .crew()
@@ -61,6 +63,18 @@ class SystemFlow(Flow[SystemState]):
         )
         self.state.uml_diagram = result.raw
         # self.save_output("uml_diagram.md", self.state.uml_diagram)
+
+    @listen(extract_requirements)
+    def generate_ui_specifications(self):
+        """Step 3: Generate UI specifications and component layouts"""
+        print("🎨 Generating UI specifications and component layouts...")
+        result = (
+            UIReqCrew()
+            .crew()
+            .kickoff(inputs={"requirements": self.state.extracted_requirements})
+        )
+        self.state.ui_specifications = result.raw
+        # self.save_output("ui_specifications.md", self.state.ui_specifications)
 
     # def save_output(self, filename, content):
     #     """Overwrite output in a Markdown file"""
@@ -76,11 +90,17 @@ class SystemFlow(Flow[SystemState]):
 def kickoff():
     # meeting_summary = input("Enter meeting summary: ")
     meeting_summary = ("""
-        The team discussed implementing a new user authentication system.
-        They mentioned that it should support OAuth, multi-factor authentication, and traditional username/password login.
-        Security was a major concern, and they emphasized encryption of user data.
-        Additionally, the system must integrate with existing databases and allow role-based access control.
-        A deadline was set for the end of Q2.
+        The GAMMA-J Web Store is a plug-and-play e-commerce solution designed to help small retailers quickly set up and manage online stores. 
+        The system, delivered via a USB key, includes essential features such as customer account management, inventory control, shopping cart
+        functionality, and secure order processing. 
+        It supports multiple user roles—customers, sales personnel, and administrators—each with tailored interfaces for browsing products,
+        managing inventory, and overseeing system operations. Security is a priority, with HTTPS encryption, fraud detection, and automated backups to protect sensitive data.
+        The platform is built on Slackware Linux, Apache, and MySQL, ensuring compatibility with older browsers like Internet Explorer 6/7 and Netscape.
+
+        Key strengths include high availability (99.99%), fast performance (e.g., <1s search times), and a plug-in API for future expansions. 
+        However, challenges remain, such as transitioning from phone orders to the digital system and integrating advanced shipping and analytics features.
+        Designed for portability and ease of use, the GAMMA-J
+        Web Store provides a cost-effective, scalable solution for small businesses entering e-commerce, with room for growth through modular enhancements.
       """)
     flow = SystemFlow()
     flow.state.meeting_summary = meeting_summary
