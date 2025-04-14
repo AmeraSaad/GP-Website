@@ -1,11 +1,18 @@
-from crewai import Agent, Crew, Process, Task
+from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # If you want to run a snippet of code before or after the crew starts,
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
 
-
+groq_llm_1= LLM(
+    model="groq/gemma2-9b-it",
+    temperature=0,
+    api_key = os.getenv("GROQ_API_KEY3")
+)
 @CrewBase
 class ModelsCrew:
     """Crew responsible for generating UML diagrams from extracted requirements."""
@@ -18,6 +25,7 @@ class ModelsCrew:
         """Agent responsible for extracting actors and use cases."""
         return Agent(
             config=self.agents_config["usecase_notation_extractor"],  
+            llm=groq_llm_1
         )
 
     @agent
@@ -25,6 +33,7 @@ class ModelsCrew:
         """Agent responsible for generating UML Use Case diagrams."""
         return Agent(
             config=self.agents_config["diagram_generator"], 
+            llm=groq_llm_1
         )
 
     @agent
@@ -32,6 +41,7 @@ class ModelsCrew:
         """Agent responsible for improving readability of UML diagrams."""
         return Agent(
             config=self.agents_config["diagram_enhancer"],  
+            llm=groq_llm_1
         )
 
     @task
