@@ -71,7 +71,7 @@ class SystemFlow(Flow[SystemState]):
         result = (
             UIReqCrew()
             .crew()
-            .kickoff(inputs={"requirements": self.state.extracted_requirements})
+            .kickoff(inputs={"meeting_summary": self.state.meeting_summary, "requirements": self.state.extracted_requirements})
         )
         self.state.ui_specifications = result.raw
         # self.save_output("ui_specifications.md", self.state.ui_specifications)

@@ -37,4 +37,3 @@ summarizer:
     your task is to summarize the previous inputs in one or two paragraphs does not exceed 4069 tokens.
   backstory: >
     An expert in UI design and development his role is to describe the UI in details
-

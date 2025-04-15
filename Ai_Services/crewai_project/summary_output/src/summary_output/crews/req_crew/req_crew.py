@@ -15,7 +15,7 @@ groq_llm_1= LLM(
 )
 
 llm2 = LLM(
-        model="gemini/gemini-1.5-pro-latest",
+        model="gemini/gemini-1.5-flash",
         temperature=0.7,
         api_key="AIzaSyAwxdTXxF48JQZMJ5w5jzTfNtWOxHukync"
     )

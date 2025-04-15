@@ -44,8 +44,13 @@ const runCrewAI = async (req, res) => {
     return res.status(200).json({
       success: true,
       data: {
-        summary: summaryDoc,
-        crewAIOutput: newOutput,
+        summary_id: summaryDoc._id,
+        summary_text: summaryDoc.summaryText,
+        crew_flow_id: summaryDoc._id,
+        requirements: newOutput.extracted_requirements,
+        srs_document: newOutput.srs_document, 
+        uml_diagram: newOutput.uml_diagram,
+        ui_specifications: newOutput.ui_specifications,
       },
       message: "Data saved successfully!",
     });
