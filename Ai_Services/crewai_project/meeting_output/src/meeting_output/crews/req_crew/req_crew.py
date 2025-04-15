@@ -14,6 +14,22 @@ groq_llm_1= LLM(
     api_key = os.getenv("GROQ_API_KEY")
 )
 
+<<<<<<< HEAD:Ai_Services/crewai_project/meeting_output/src/meeting_output/crews/req_crew/req_crew.py
+||||||| parent of d9efdbe (ui reuirements agents updates):Ai_Services/crewai_project/summary_output/src/summary_output/crews/req_crew/req_crew.py
+llm2 = LLM(
+        model="gemini/gemini-1.5-pro-latest",
+        temperature=0.7,
+        api_key="AIzaSyAwxdTXxF48JQZMJ5w5jzTfNtWOxHukync"
+    )
+
+=======
+llm2 = LLM(
+        model="gemini/gemini-1.5-flash",
+        temperature=0.7,
+        api_key="AIzaSyAwxdTXxF48JQZMJ5w5jzTfNtWOxHukync"
+    )
+
+>>>>>>> d9efdbe (ui reuirements agents updates):Ai_Services/crewai_project/summary_output/src/summary_output/crews/req_crew/req_crew.py
 @CrewBase
 class ReqCrew:
     """Crew responsible for extracting and formatting system requirements."""

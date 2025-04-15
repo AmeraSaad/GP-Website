@@ -36,7 +36,7 @@ class SystemFlow(Flow[SystemState]):
             .kickoff(inputs={"meeting_summary": self.state.meeting_summary})
         )
         self.state.extracted_requirements = result.raw
-        # self.save_output("extracted_requirements.md", self.state.extracted_requirements)
+        self.save_output("extracted_requirements.md", self.state.extracted_requirements)
 
     @listen(extract_requirements) 
     def generate_srs(self):
@@ -48,7 +48,7 @@ class SystemFlow(Flow[SystemState]):
             .kickoff(inputs={"requirements": self.state.extracted_requirements})
         )
         self.state.srs_document = result.raw
-        # self.save_output("srs_document.md", self.state.srs_document)
+        self.save_output("srs_document.md", self.state.srs_document)
 
     @listen(extract_requirements)
     def generate_uml_diagram(self):
@@ -60,21 +60,56 @@ class SystemFlow(Flow[SystemState]):
             .kickoff(inputs={"requirements": self.state.extracted_requirements})
         )
         self.state.uml_diagram = result.raw
-        # self.save_output("uml_diagram.md", self.state.uml_diagram)
+        self.save_output("uml_diagram.md", self.state.uml_diagram)
+
+<<<<<<< HEAD:Ai_Services/crewai_project/meeting_output/src/meeting_output/main.py
+    # def save_output(self, filename, content):
+    #     """Overwrite output in a Markdown file"""
+    #     filepath = os.path.join(OUTPUT_DIR, filename)
+||||||| parent of d9efdbe (ui reuirements agents updates):Ai_Services/crewai_project/summary_output/src/summary_output/main.py
+    @listen(extract_requirements)
+    def generate_ui_specifications(self):
+        """Step 3: Generate UI specifications and component layouts"""
+        print("🎨 Generating UI specifications and component layouts...")
+        result = (
+            UIReqCrew()
+            .crew()
+            .kickoff(inputs={"requirements": self.state.extracted_requirements})
+        )
+        self.state.ui_specifications = result.raw
+        # self.save_output("ui_specifications.md", self.state.ui_specifications)
 
     # def save_output(self, filename, content):
     #     """Overwrite output in a Markdown file"""
     #     filepath = os.path.join(OUTPUT_DIR, filename)
+=======
+    @listen(extract_requirements)
+    def generate_ui_specifications(self):
+        """Step 3: Generate UI specifications and component layouts"""
+        print("🎨 Generating UI specifications and component layouts...")
+        result = (
+            UIReqCrew()
+            .crew()
+            .kickoff(inputs={"meeting_summary": self.state.meeting_summary, "requirements": self.state.extracted_requirements})
+        )
+        self.state.ui_specifications = result.raw
+        self.save_output("ui_specifications.md", self.state.ui_specifications)
 
-    #     with open(filepath, "w", encoding="utf-8") as f:
-    #         f.write(f"# {filename.replace('_', ' ').title()}\n\n")
-    #         f.write(content)
+    def save_output(self, filename, content):
+        """Overwrite output in a Markdown file"""
+        filepath = os.path.join(OUTPUT_DIR, filename)
+>>>>>>> d9efdbe (ui reuirements agents updates):Ai_Services/crewai_project/summary_output/src/summary_output/main.py
 
-    #     print(f"📂 Output saved: `{filename}`")
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write(f"# {filename.replace('_', ' ').title()}\n\n")
+            f.write(content)
+
+        print(f"📂 Output saved: `{filename}`")
 
 
 def kickoff():
     # meeting_summary = input("Enter meeting summary: ")
+    
     meeting_summary = ("""
         The team discussed implementing a new user authentication system.
         They mentioned that it should support OAuth, multi-factor authentication, and traditional username/password login.
@@ -88,8 +123,19 @@ def kickoff():
 
 
 def plot():
+    print("Enter meeting summary: ")
     flow = SystemFlow()
     flow.plot()
 
+<<<<<<< HEAD:Ai_Services/crewai_project/meeting_output/src/meeting_output/main.py
 # if __name__ == "__main__":
 #     kickoff()
+||||||| parent of d9efdbe (ui reuirements agents updates):Ai_Services/crewai_project/summary_output/src/summary_output/main.py
+# if __name__ == "__main__":
+#     kickoff()
+
+=======
+if __name__ == "__main__":
+    kickoff()
+
+>>>>>>> d9efdbe (ui reuirements agents updates):Ai_Services/crewai_project/summary_output/src/summary_output/main.py
