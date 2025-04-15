@@ -1,0 +1,50 @@
+nlp_task:
+  description: >
+    Process and clean the unstructured meeting summary {meeting_summary}.
+  expected_output: >
+    A cleaned and structured text.
+  agent: nlp_agent
+
+extraction_task:
+  description: >
+    Extract structured requirements from the processed text and Categorizes requirements into Functional, Non-Functional (Performance, Security, Scalability, or any other category, etc.) if applicable
+    Ensure clarity, correctness, and completeness.
+  expected_output: >
+    A highly structured list of requirements, categorized and formatted correctly
+  agent: requirement_extractor_agent
+
+
+formatting_task:
+  description: >
+    Format the validated requirements into a structured Markdown format.
+  expected_output: >
+    A well-formatted Markdown file containing categorized requirements for example
+    **Functional Requirements:**\n
+    A. [Category Name]: \n [Requirement details]\n [Requirement details] \n
+    B. [Category Name]: \n [Requirement details]\n
+    ...\n\n
+    **Non-Functional Requirements:**\n
+    A. [Category Name]:\n [Requirement details]\n
+    ...\n\n.
+  agent: formatting_agent
+
+ui_extraction_task:
+  description: >
+    Extract and analyze UI/UX specific requirements from the processed text.
+    Focus on identifying:
+    - User interface components and layouts
+    - User interaction flows and navigation
+    - Visual design elements and styling
+    - Accessibility requirements
+    - Responsive design specifications
+    - User feedback mechanisms
+  expected_output: >
+    A structured list of UI/UX requirements categorized by:
+    - Interface Components
+    - User Flows
+    - Visual Design
+    - Accessibility
+    - Responsive Design
+    - User Interaction
+  agent: ui_requirement_agent
+  
