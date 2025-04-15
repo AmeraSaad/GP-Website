@@ -38,7 +38,7 @@ class SystemFlow(Flow[SystemState]):
             .kickoff(inputs={"meeting_summary": self.state.meeting_summary})
         )
         self.state.extracted_requirements = result.raw
-        # self.save_output("extracted_requirements.md", self.state.extracted_requirements)
+        self.save_output("extracted_requirements.md", self.state.extracted_requirements)
 
     @listen(extract_requirements) 
     def generate_srs(self):
@@ -50,7 +50,7 @@ class SystemFlow(Flow[SystemState]):
             .kickoff(inputs={"requirements": self.state.extracted_requirements})
         )
         self.state.srs_document = result.raw
-        # self.save_output("srs_document.md", self.state.srs_document)
+        self.save_output("srs_document.md", self.state.srs_document)
 
     @listen(extract_requirements)
     def generate_uml_diagram(self):
@@ -62,7 +62,7 @@ class SystemFlow(Flow[SystemState]):
             .kickoff(inputs={"requirements": self.state.extracted_requirements})
         )
         self.state.uml_diagram = result.raw
-        # self.save_output("uml_diagram.md", self.state.uml_diagram)
+        self.save_output("uml_diagram.md", self.state.uml_diagram)
 
     @listen(extract_requirements)
     def generate_ui_specifications(self):
@@ -71,24 +71,25 @@ class SystemFlow(Flow[SystemState]):
         result = (
             UIReqCrew()
             .crew()
-            .kickoff(inputs={"requirements": self.state.extracted_requirements})
+            .kickoff(inputs={"meeting_summary": self.state.meeting_summary, "requirements": self.state.extracted_requirements})
         )
         self.state.ui_specifications = result.raw
-        # self.save_output("ui_specifications.md", self.state.ui_specifications)
+        self.save_output("ui_specifications.md", self.state.ui_specifications)
 
-    # def save_output(self, filename, content):
-    #     """Overwrite output in a Markdown file"""
-    #     filepath = os.path.join(OUTPUT_DIR, filename)
+    def save_output(self, filename, content):
+        """Overwrite output in a Markdown file"""
+        filepath = os.path.join(OUTPUT_DIR, filename)
 
-    #     with open(filepath, "w", encoding="utf-8") as f:
-    #         f.write(f"# {filename.replace('_', ' ').title()}\n\n")
-    #         f.write(content)
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write(f"# {filename.replace('_', ' ').title()}\n\n")
+            f.write(content)
 
-    #     print(f"📂 Output saved: `{filename}`")
+        print(f"📂 Output saved: `{filename}`")
 
 
 def kickoff():
     # meeting_summary = input("Enter meeting summary: ")
+    
     meeting_summary = ("""
         The GAMMA-J Web Store is a plug-and-play e-commerce solution designed to help small retailers quickly set up and manage online stores. 
         The system, delivered via a USB key, includes essential features such as customer account management, inventory control, shopping cart
@@ -108,10 +109,10 @@ def kickoff():
 
 
 def plot():
+    print("Enter meeting summary: ")
     flow = SystemFlow()
     flow.plot()
 
-# if __name__ == "__main__":
-#     kickoff()
-
+if __name__ == "__main__":
+    kickoff()
 
