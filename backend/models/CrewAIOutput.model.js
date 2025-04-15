@@ -17,6 +17,10 @@ const CrewAIOutputSchema = new mongoose.Schema({
   uml_diagram: {
     type: String,
     default: '',
+  },
+  ui_specifications: {   
+    type: String,
+    default: '',
   }
 },
   {

@@ -16,4 +16,5 @@ const SummarySchema = new mongoose.Schema({
   }
 );
 
-module.exports = mongoose.model("Summary", SummarySchema);
+// module.exports = mongoose.model("Summary", SummarySchema);
+module.exports = mongoose.models.Summary || mongoose.model("Summary", SummarySchema);

@@ -1,7 +1,7 @@
 // backend/controllers/crewaiController.js
 
 const axios = require("axios");
-const CrewAIOutput = require("../models/crewAIOutput.model");
+const CrewAIOutput = require("../models/CrewAIOutput.model");
 const Summary  = require("../models/summary.model");
 
 // Create a new CrewAI output
@@ -26,7 +26,7 @@ const runCrewAI = async (req, res) => {
     const response = await axios.post(`${fastApiUrl}/crewai-flow`, { meeting_summary });
     
     // Extract outputs from the FastAPI response
-    const { extracted_requirements, srs_document, uml_diagram } = response.data;
+    const { extracted_requirements, srs_document, uml_diagram, ui_specifications } = response.data;
     
     // 4. Create a new document using the Mongoose model
     const newOutput = new CrewAIOutput({
@@ -34,6 +34,7 @@ const runCrewAI = async (req, res) => {
       extracted_requirements,
       srs_document,
       uml_diagram,
+      ui_specifications  
     });
     
     // 5. Save the document to MongoDB

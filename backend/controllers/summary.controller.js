@@ -1,5 +1,5 @@
 const axios = require("axios");
-const Summary = require("../models/summary.model");
+const Summary = require("../models/Summary.model");
 const Meeting = require("../models/meeting.model");
 
 const generateSummary = async (req, res) => {

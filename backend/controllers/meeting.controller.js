@@ -1,7 +1,7 @@
 const axios = require("axios");
 const Meeting = require("../models/meeting.model");
 const Summary = require("../models/summary.model");
-const CrewAIOutput = require('../models/crewAIOutput.model');
+const CrewAIOutput = require('../models/CrewAIOutput.model');
 const UIDesign = require('../models/uIDesign.model');
 
 const processMeeting = async (req, res) => {
@@ -15,7 +15,7 @@ const processMeeting = async (req, res) => {
     let meetingDoc = await Meeting.create({ transcript, status: "uploaded" });
 
     // 2. Call the summarization endpoint to generate a summary
-    const summaryMinutes_URL = process.env.summaryMinutes_URL || "https://5d57-34-116-82-196.ngrok-free.app";
+    const summaryMinutes_URL = process.env.summaryMinutes_URL || "https://68e5-34-80-104-144.ngrok-free.app";
     const summaryMinutesResponse  = await axios.post(`${summaryMinutes_URL}/summaryMinutes`, { transcript });
     
     if (!summaryMinutesResponse.data || !summaryMinutesResponse.data.summary) {
@@ -51,7 +51,7 @@ const processMeeting = async (req, res) => {
       });
     }
     
-    const { extracted_requirements, srs_document, uml_diagram } = crewAIResponse.data;
+    const { extracted_requirements, srs_document, uml_diagram, ui_specifications} = crewAIResponse.data;
     
     // 5. Create a new CrewAIOutput document linked to the summary
     const crewAIOutputDoc = new CrewAIOutput({
@@ -59,6 +59,7 @@ const processMeeting = async (req, res) => {
       extracted_requirements,
       srs_document,
       uml_diagram,
+      ui_specifications,
     });
     await crewAIOutputDoc.save();
     
@@ -66,15 +67,23 @@ const processMeeting = async (req, res) => {
     meetingDoc.crewai_output = crewAIOutputDoc._id;
     meetingDoc.status = "processed";
     await meetingDoc.save();
+
+    const result = {
+      meetingId: meetingDoc._id,
+      summaryId: newSummary._id,
+      transcript: meetingDoc.transcript,
+      summaryText: newSummary.summaryText,
+      minutes: meetingDoc.minutes,
+      extracted_requirements: crewAIOutputDoc.extracted_requirements,
+      srs_document: crewAIOutputDoc.srs_document,
+      uml_diagram: crewAIOutputDoc.uml_diagram,
+      ui_specifications: crewAIOutputDoc.ui_specifications
+    };
     
     // Return the in-memory objects without re-querying the database
     return res.status(200).json({
       success: true,
-      data: {
-        meeting: meetingDoc,
-        summary: newSummary,
-        crewAIOutput: crewAIOutputDoc
-      },
+      data: result,
       message: "Full meeting pipeline processed successfully."
     });
     
