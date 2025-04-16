@@ -15,7 +15,7 @@ const processMeeting = async (req, res) => {
     let meetingDoc = await Meeting.create({ transcript, status: "uploaded" });
 
     // 2. Call the summarization endpoint to generate a summary
-    const summaryMinutes_URL = process.env.summaryMinutes_URL || "https://68e5-34-80-104-144.ngrok-free.app";
+    const summaryMinutes_URL = process.env.summaryMinutes_URL || "https://34a5-34-80-93-140.ngrok-free.app";
     const summaryMinutesResponse  = await axios.post(`${summaryMinutes_URL}/summaryMinutes`, { transcript });
     
     if (!summaryMinutesResponse.data || !summaryMinutesResponse.data.summary) {
