@@ -47,7 +47,7 @@ class SystemFlow(Flow[SystemState]):
         result = (
             SrsCrew()
             .crew()
-            .kickoff(inputs={"requirements": self.state.extracted_requirements})
+            .kickoff(inputs={"requirements": self.state.extracted_requirements, "meeting_summary": self.state.meeting_summary})
         )
         self.state.srs_document = result.raw
         self.save_output("srs_document.md", self.state.srs_document)
@@ -59,7 +59,7 @@ class SystemFlow(Flow[SystemState]):
         result = (
             ModelsCrew()
             .crew()
-            .kickoff(inputs={"requirements": self.state.extracted_requirements})
+            .kickoff(inputs={"requirements": self.state.extracted_requirements, "meeting_summary": self.state.meeting_summary})
         )
         self.state.uml_diagram = result.raw
         self.save_output("uml_diagram.md", self.state.uml_diagram)
