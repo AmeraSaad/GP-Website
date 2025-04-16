@@ -19,7 +19,7 @@ class SrsCrew:
     )
 
     llm2 = LLM(
-        model="gemini/gemini-1.5-pro-latest",
+        model="gemini/gemini-1.5-flash",
         temperature=0.7,
         api_key=os.getenv("GEM_API_KEY2")
     )

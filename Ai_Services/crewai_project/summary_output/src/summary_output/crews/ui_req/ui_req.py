@@ -15,12 +15,12 @@ groq_llm_1= LLM(
 )
 
 gemini_llm = LLM(
-        model="gemini/gemini-1.5-pro-latest",
+        model="gemini/gemini-1.5-flash",
         temperature=0.7,
         api_key= os.getenv("GEM_API_KEY1")
     )
 gemini_llm2 = LLM(
-        model="gemini/gemini-1.5-pro-latest",
+        model="gemini/gemini-1.5-flash",
         temperature=0.7,
         api_key= os.getenv("GEM_API_KEY2")
     )
@@ -33,79 +33,69 @@ class UIReqCrew:
     tasks_config = "config/tasks.yaml"
 
     @agent
-    def page_structure_agent(self) -> Agent:
-        """Agent responsible for defining page structure and layout."""
+    def page_listing_agent(self) -> Agent:
+        
         return Agent(
-            config=self.agents_config["page_structure_agent"],
-            llm=gemini_llm2
+            config=self.agents_config["page_listing_agent"],
+            llm=groq_llm_1
         )
 
     @agent
-    def component_identification_agent(self) -> Agent:
-        """Agent responsible for identifying UI components."""
+    def component_analysis_agent(self) -> Agent:
+        
         return Agent(
-            config=self.agents_config["component_identification_agent"],
+            config=self.agents_config["component_analysis_agent"],
             llm=gemini_llm2
         )
 
-    @agent
-    def component_positioning_agent(self) -> Agent:
-        """Agent responsible for defining component positions."""
-        return Agent(
-            config=self.agents_config["component_positioning_agent"],
-            llm=gemini_llm2
-        )
 
     @agent
-    def component_relationship_agent(self) -> Agent:
-        """Agent responsible for defining component relationships."""
+    def hierarchy_analysis_agent(self) -> Agent:
+        
         return Agent(
-            config=self.agents_config["component_relationship_agent"],
+            config=self.agents_config["hierarchy_analysis_agent"],
+            llm=gemini_llm
+        )
+    
+    @agent
+    def summarizer(self) -> Agent:
+        
+        return Agent(
+            config=self.agents_config["summarizer"],
             llm=gemini_llm
         )
 
-    @agent
-    def visual_hierarchy_agent(self) -> Agent:
-        """Agent responsible for defining visual hierarchy."""
-        return Agent(
-            config=self.agents_config["visual_hierarchy_agent"],
-            llm=gemini_llm
+    
+
+    @task
+    def list_pages_task(self) -> Task:
+        
+        return Task(
+            config=self.tasks_config["list_pages_task"],
         )
 
     @task
-    def page_structure_task(self) -> Task:
-        """Task to define page structure and layout."""
+    def analyze_components_task(self) -> Task:
+        
         return Task(
-            config=self.tasks_config["page_structure_task"],
+            config=self.tasks_config["analyze_components_task"],
+        )
+    
+    @task
+    def analyze_hierarchy_task(self) -> Task:
+        
+        return Task(
+            config=self.tasks_config["analyze_hierarchy_task"],
         )
 
     @task
-    def component_identification_task(self) -> Task:
-        """Task to identify UI components."""
+    def summary_task(self) -> Task:
+       
         return Task(
-            config=self.tasks_config["component_identification_task"],
+            config=self.tasks_config["summary_task"],
         )
 
-    @task
-    def component_positioning_task(self) -> Task:
-        """Task to define component positions."""
-        return Task(
-            config=self.tasks_config["component_positioning_task"],
-        )
-
-    @task
-    def component_relationship_task(self) -> Task:
-        """Task to define component relationships."""
-        return Task(
-            config=self.tasks_config["component_relationship_task"],
-        )
-
-    @task
-    def visual_hierarchy_task(self) -> Task:
-        """Task to define visual hierarchy."""
-        return Task(
-            config=self.tasks_config["visual_hierarchy_task"],
-        )
+    
 
     @crew
     def crew(self) -> Crew:

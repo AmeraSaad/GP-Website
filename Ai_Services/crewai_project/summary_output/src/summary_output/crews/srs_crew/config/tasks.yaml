@@ -1,6 +1,6 @@
 content_task:
   description: >
-    Generate the Introduction, Overall Description, and Appendix sections of the Software Requirements Specification (SRS) document. 
+    read this {meeting_summary} and Generate the Introduction, Overall Description, and Appendix sections of the Software Requirements Specification (SRS) document. 
     These sections should include Purpose, Scope, Definitions, Acronyms, References, product perspective, functions, user characteristics, constraints, assumptions, and a glossary of terms or supporting content.
   expected_output: >
     A comprehensive, well-organized document section that introduces the system, describes its context and environment, and provides any supporting material (e.g., glossary or references) in professional IEEE format.
@@ -8,7 +8,7 @@ content_task:
 
 requirements_task:
   description: >
-    Generate both functional and non-functional requirements of the software system based on the extracted requirements and system goals. 
+    read this requirements {requirements} and Generate both functional and non-functional requirements of the software system based on the extracted requirements and system goals. 
     Functional requirements should be clear, testable, and organized logically. Non-functional requirements should be grouped by type (performance, security, usability, etc.).
   expected_output: >
     A well-formatted list of both functional and non-functional requirements written in IEEE-compliant style, with proper structure and categorization.
@@ -38,9 +38,6 @@ assembly_task:
       Briefly describe the software product.
 
       Explain its features, benefits, and objectives.
-
-      1.5 References
-      List all referenced documents (business requirements, standards, regulations).
 
       2. Overall Description
       2.1 Product Perspective

@@ -47,7 +47,7 @@ class SystemFlow(Flow[SystemState]):
         result = (
             SrsCrew()
             .crew()
-            .kickoff(inputs={"requirements": self.state.extracted_requirements})
+            .kickoff(inputs={"requirements": self.state.extracted_requirements, "meeting_summary": self.state.meeting_summary})
         )
         self.state.srs_document = result.raw
         # self.save_output("srs_document.md", self.state.srs_document)
@@ -59,7 +59,7 @@ class SystemFlow(Flow[SystemState]):
         result = (
             ModelsCrew()
             .crew()
-            .kickoff(inputs={"requirements": self.state.extracted_requirements})
+            .kickoff(inputs={"requirements": self.state.extracted_requirements, "meeting_summary": self.state.meeting_summary})
         )
         self.state.uml_diagram = result.raw
         # self.save_output("uml_diagram.md", self.state.uml_diagram)
@@ -71,7 +71,7 @@ class SystemFlow(Flow[SystemState]):
         result = (
             UIReqCrew()
             .crew()
-            .kickoff(inputs={"requirements": self.state.extracted_requirements})
+            .kickoff(inputs={"meeting_summary": self.state.meeting_summary, "requirements": self.state.extracted_requirements})
         )
         self.state.ui_specifications = result.raw
         # self.save_output("ui_specifications.md", self.state.ui_specifications)
@@ -89,6 +89,7 @@ class SystemFlow(Flow[SystemState]):
 
 def kickoff():
     # meeting_summary = input("Enter meeting summary: ")
+    
     meeting_summary = ("""
         The GAMMA-J Web Store is a plug-and-play e-commerce solution designed to help small retailers quickly set up and manage online stores. 
         The system, delivered via a USB key, includes essential features such as customer account management, inventory control, shopping cart
@@ -108,9 +109,9 @@ def kickoff():
 
 
 def plot():
+    print("Enter meeting summary: ")
     flow = SystemFlow()
     flow.plot()
 
 # if __name__ == "__main__":
 #     kickoff()
-

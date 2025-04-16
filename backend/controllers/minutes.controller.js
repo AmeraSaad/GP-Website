@@ -2,7 +2,7 @@ const axios = require("axios");
 const Summary = require("../models/Summary.model");
 const Meeting = require("../models/meeting.model");
 
-const generateSummary = async (req, res) => {
+const generateMinutes = async (req, res) => {
   try {
     const { transcript } = req.body;
     if (!transcript || !transcript.trim()) {
@@ -41,45 +41,21 @@ const generateSummary = async (req, res) => {
 
     return res.status(201).json({
       success: true,
-      data: newSummary,
-      message: "Summary generated and saved successfully.",
+      meetingId: meetingDoc._id,
+      minutes: meetingDoc.minutes,
+      message: "Meeting minutes generated and saved successfully.",
     });
 
   } catch (error) {
-    console.error("Error generating summary from transcript:", error.message);
+    console.error("Error generating Meeting minutes from transcript:", error.message);
     return res.status(500).json({
       success: false,
-      message: "Error running generating summary ",
+      message: "Error running generating Meeting minutes ",
       error: error.message,
     });
   }
 };
 
-const getAllSummaries = async (req, res) => {
-  try {
-    const summaries = await Summary.find().populate("meetingRef");
-    return res.status(200).json({ success: true, data: summaries });
-  } catch (error) {
-    console.error("Error retrieving summaries:", error.message);
-    return res.status(500).json({ success: false, message: error.message });
-  }
-};
-
-const getSummaryById = async (req, res) => {
-  try {
-    const summary = await Summary.findById(req.params.id).populate("meetingRef");
-    if (!summary) {
-      return res.status(404).json({ success: false, message: "Summary not found." });
-    }
-    return res.status(200).json({ success: true, data: summary });
-  } catch (error) {
-    console.error("Error retrieving summary:", error.message);
-    return res.status(500).json({ success: false, message: error.message });
-  }
-};
-
 module.exports = {
-  generateSummary, 
-  getAllSummaries,
-  getSummaryById,
+  generateMinutes, 
 };

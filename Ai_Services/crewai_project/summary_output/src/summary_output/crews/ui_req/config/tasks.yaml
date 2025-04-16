@@ -1,78 +1,64 @@
-# UI Components Analysis Tasks
-page_structure_task:
-  description: >
-    Define the basic structure and layout of each page:
-    - Main sections and containers
-    - Layout grid system
-    - Content areas
-    - Spacing and margins
-    - Responsive breakpoints
-  expected_output: >
-    A detailed page structure specification including:
-    - Section definitions
-    - Container layouts
-    - Grid system
-    - Spacing rules
-  agent: page_structure_agent
 
-component_identification_task:
+
+# UI Requirements Analysis Tasks
+list_pages_task:
   description: >
-    Identify all UI components for each page:
-    - Component types (buttons, forms, tables, etc.)
-    - Component purposes
-    - Component states
-    - Component variations
+    this is a summary for the project {meeting_summary}
+    this is the requirements for the project {requirements}
+    Analyze the application and create a comprehensive list of all pages:
+    - Page name/title
+    - Brief description of the page's purpose
+    - Any special characteristics or features
+    - Navigation relationships
+    - User flow context
   expected_output: >
-    A comprehensive list of UI components including:
+    A detailed list of all pages including:
+    - Page names and titles
+    - Purpose descriptions
+    - Special features
+    - Navigation context
+  agent: page_listing_agent
+
+analyze_components_task:
+  description: >
+    For each page identified, analyze and list all UI components:
+    - Component type/name
+    - Purpose/functionality
+    - Key properties or characteristics
+    - Any special behaviors or interactions
+    - Component states and variations
+  expected_output: >
+    A comprehensive component analysis including:
     - Component inventory
-    - Component purposes
-    - Component states
-    - Component variations
-  agent: component_identification_agent
+    - Purpose descriptions
+    - Property specifications
+    - Behavior documentation
+  agent: component_analysis_agent
 
-component_positioning_task:
+analyze_hierarchy_task:
   description: >
-    Define precise component positioning:
-    - Exact coordinates or grid positions
-    - Component dimensions
-    - Spacing between components
-    - Alignment rules
-    - Responsive behavior
+    For each page, analyze and document the view hierarchy:
+    - Element name/type
+    - Parent element
+    - Child elements (if any)
+    - Position in the hierarchy
+    - Layout constraints or relationships
+    return only the hierarchy with no other text.
   expected_output: >
-    Detailed component positioning specifications including:
-    - Position coordinates
-    - Size dimensions
-    - Spacing values
-    - Alignment rules
-  agent: component_positioning_agent
-
-component_relationship_task:
-  description: >
-    Define component relationships:
-    - Parent-child relationships
-    - Component dependencies
-    - Interaction flows
-    - Data relationships
-  expected_output: >
-    Component relationship specifications including:
-    - Hierarchy diagrams
-    - Dependency maps
-    - Interaction flows
-    - Data connections
-  agent: component_relationship_agent
-
-visual_hierarchy_task:
-  description: >
-    Define visual hierarchy:
-    - Component importance levels
-    - Size relationships
-    - Emphasis rules
-    - Visual flow
-  expected_output: >
-    Visual hierarchy specifications including:
-    - Importance levels
-    - Size relationships
-    - Emphasis rules
-    - Visual flow patterns
-  agent: visual_hierarchy_agent
+    Detailed view hierarchy documentation including:
+    - Element relationships
+    - Hierarchy structure
+    - Layout constraints
+    - Position specifications
+    make sure to return all the hierarchy of each page.
+  agent: hierarchy_analysis_agent
   
+summary_task:
+  description: >
+    summarize each page in the hierarchy in one paragraph represents the details of the page.
+    each page should be in one paragraph.
+    split each paragraph with a new line.
+    i need it just text not a markdown file.
+  expected_output: >
+    summary paragraph
+  agent: summarizer
