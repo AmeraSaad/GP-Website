@@ -1,6 +1,6 @@
 const axios = require("axios");
 const Meeting = require("../models/meeting.model");
-const Summary = require("../models/summary.model");
+const Summary = require("../models/Summary.model");
 const CrewAIOutput = require('../models/CrewAIOutput.model');
 const UIDesign = require('../models/uIDesign.model');
 
