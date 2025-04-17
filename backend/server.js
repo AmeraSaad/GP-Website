@@ -10,6 +10,8 @@ const summaryRoutes = require("./routes/summary.routes");
 const minutesRoutes = require("./routes/minutes.routes");
 const meetingRoutes = require("./routes/meeting.routes");
 
+const uiRoutes = require('./routes/uiImg.routes');
+
 dotenv.config();
 
 const app = express();
@@ -25,8 +27,10 @@ app.use("/api/summaries", summaryRoutes);
 app.use("/api/minutes", minutesRoutes);
 app.use("/api/meetings", meetingRoutes);
 
-// Serve static files if needed (for production)
-// app.use(express.static(path.join(__dirname, "public")));
+app.use('/api/ui', uiRoutes);
+
+// Serve the outputs folder statically
+app.use('/output', express.static(path.join(__dirname, 'output')));
 
 
 app.get("/", (req, res) => {
