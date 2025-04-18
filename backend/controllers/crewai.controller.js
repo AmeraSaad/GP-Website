@@ -2,7 +2,7 @@
 
 const axios = require("axios");
 const CrewAIOutput = require("../models/CrewAIOutput.model");
-const Summary  = require("../models/summary.model");
+const Summary  = require("../models/Summary.model");
 
 // Create a new CrewAI output
 const runCrewAI = async (req, res) => {
