@@ -38,11 +38,6 @@ const UmlRenderer = ({ umlCode }) => {
   if (!umlCode) return <div className="text-neutral-400">No UML diagram available</div>;
   if (error) return <div className="text-red-400">{error}</div>;
 
-
-
-
-
-
   return (
     <div>
       <img
