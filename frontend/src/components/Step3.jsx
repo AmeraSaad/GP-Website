@@ -137,38 +137,56 @@ const Step3 = ({ selectedMode, uploadedFile, goBack }) => {
                 "# Software Requirements Specification (SRS) for Social Networking Application\n\n**1. Introduction**\n\n**1.1 Purpose**\n\nThis document outlines the software requirements for a new social networking application. It serves as a guide for developers, testers, and stakeholders throughout the software development lifecycle. It details the functional and non-functional requirements necessary to build a successful and user-friendly application.\n\n**1.2 Document Conventions**\n\n*   **Acronyms:** SRS (Software Requirements Specification), UI (User Interface), UX (User Experience), API (Application Programming Interface), SQL (Structured Query Language), GDPR (General Data Protection Regulation), CCPA (California Consumer Privacy Act), WCAG (Web Content Accessibility Guidelines)\n*   **Formatting:** This document uses Markdown formatting. Requirements are presented using numbered lists and tables where appropriate.  UML diagrams may be included in future iterations.\n\n**1.3 Intended Audience and Reading Suggestions**\n\nThis document is intended for:\n\n*   **Developers:** To understand the detailed functional and non-functional requirements for implementation.\n*   **Testers:** To define test cases and acceptance criteria.\n*   **Stakeholders:** To gain a high-level understanding of the project scope and objectives.\n\nDevelopers should read the entire document, paying close attention to section 3 (System Features and Requirements). Testers should focus on sections 3 and the specific acceptance criteria within each requirement. Stakeholders should review sections 1 and 2 for a general overview.\n\n**1.4 Product Scope**\n\nThis document specifies the requirements for a social networking application that allows users to connect, share posts, and engage with each other. Key features include user profile management, search functionality, a personalized dashboard, post creation and sharing, comment and engagement features, and connection management. The application aims to provide a user-friendly and engaging platform for social interaction.\n\n\n**2. Overall Description**\n\n**2.1 Product Perspective**\n\nThis social networking application will operate as a standalone web application accessible through modern web browsers. It will not directly interact with other systems initially, but future iterations may include integration with third-party authentication providers (e.g., Google, Facebook, OAuth 2.0).\n\n**2.2 Product Features**\n\nKey functionalities include:\n\n*   User Profile Management\n*   Search Functionality\n*   Personalized Dashboard\n*   Post Creation and Sharing\n*   Comment and Engagement\n*   Connection Management\n*   Intuitive Navigation\n*   Notification System\n\n**2.3 User Classes and Characteristics**\n\nThe application will cater to the following user classes:\n\n*   **Registered Users:** Can create profiles, post, comment, manage connections, and receive notifications.\n*   **Guests:** Limited access, primarily for browsing public content (future implementation).  May require registration for certain features.\n*   **Administrators:** Access to system administration tools (future implementation).  Can manage user accounts, content moderation, and system settings.\n\n\n**2.4 Operating Environment**\n\n*   **Hardware:** Modern desktop computers, tablets, and smartphones.\n*   **Software:** Modern web browsers (Chrome, Firefox, Safari, Edge), supporting JavaScript and HTML5.\n*   **Network:** Reliable internet connection required.  Minimum bandwidth requirements to be specified in a separate document.\n*   **Platforms:** Web-based application (responsive design for various screen sizes).  Target platforms include iOS and Android for mobile app versions (future implementation).\n*   **Database:**  A relational database (e.g., PostgreSQL, MySQL) will be used to store user data and application content.  Specific database technology to be defined in the system design document.\n\n\n**2.5 Design and Implementation Constraints**\n\n*   The application should be developed using a modern technology stack (specific technologies to be defined in a separate document).  This will include a consideration of scalability and maintainability.\n*   The application must comply with relevant data privacy regulations (e.g., GDPR, CCPA).  A Data Protection Impact Assessment (DPIA) will be conducted.\n*   Security best practices must be followed throughout the development process, including regular security audits and penetration testing.\n*   The application should be designed for internationalization and localization to support multiple languages and regions (future implementation).\n\n**2.6 User Documentation**\n\nUser documentation will include:\n\n*   A comprehensive user guide covering all application features.\n*   Context-sensitive help within the application.\n*   Short video tutorials demonstrating key functionalities.\n*   FAQ section addressing common user questions.\n\n**2.7 Assumptions and Dependencies**\n\n*   The application assumes the availability of a reliable internet connection for users.\n*   The application may depend on third-party libraries for certain functionalities (to be specified).  These dependencies will be documented and managed carefully.\n*   The application assumes the availability of a suitable hosting environment with sufficient resources to meet performance requirements.\n\n\n**3. System Features and Requirements**\n\n**3.1 Functional Requirements**\n\n| Requirement ID | Description | Priority | Input/Process/Output | Acceptance Criteria |\n|---|---|---|---|---|\n| FR-001 | User Profile Management: Create and manage user profiles (name, email, password, profile picture, bio). | High | User Input (Profile Data) → System Processes (Validation, Storage) → System Output (Profile Page, Success/Error Messages) | Profile creation and update functionality is available.  Data validation ensures correct data types and formats.  Error messages are clear and informative. |\n| FR-002 | User Profile Management: Update user profile information. | High | User Input (Updated Profile Data) → System Processes (Validation, Update) → System Output (Updated Profile Page, Success/Error Messages) | Users can successfully update their profile information.  Changes are reflected immediately.  Error handling is robust. |\n| FR-003 | Search Functionality: Search for users based on criteria (interests, preferences, keywords). | High | User Input (Search Query) → System Processes (Search Algorithm) → System Output (Search Results) | Search results are relevant and displayed in a user-friendly manner.  Search functionality supports partial matches and multiple keywords. |\n| FR-004 | Dashboard: Display personalized dashboard with connections, activity feed, and notifications. | High | System Processes (Data Retrieval) → System Output (Dashboard) | The dashboard displays recent activity, connections, and unread notifications.  Information is updated in real-time or near real-time. |\n| FR-005 | Post Creation: Create and share posts (text, images, videos). | High | User Input (Post Content) → System Processes (Validation, Storage, Sharing) → System Output (Posted Content, Success/Error Messages) | Users can create posts with various media types.  Posts are shared with selected connections.  File upload sizes are limited. |\n| FR-006 | Comment and Engagement: Comment on posts and reply to comments. | High | User Input (Comment Text) → System Processes (Validation, Storage, Notification) → System Output (Updated Comment Section) | Users can comment and reply to comments on posts.  Comments are displayed chronologically.  Nested replies are supported. |\n| FR-007 | Connection Management: Add, remove, and view connections. | High | User Input (Connection Actions) → System Processes (Connection Management) → System Output (Updated Connection List) | Users can manage their connections effectively.  Connection requests are handled appropriately.  Connection status is clearly indicated. |\n| FR-008 | Navigation: Provide clear and intuitive navigation throughout the application. | High | System Processes (Navigation Structure) → System Output (Navigation Menu) | Navigation is consistent across all pages.  Menu is easily accessible.  Users can quickly navigate to different sections of the application. |\n| FR-009 | Notification System: Users receive notifications for new connections, comments, and mentions. | Medium | System Processes (Notification Generation) → System Output (Notifications) | Notifications are delivered promptly and clearly indicate the type of event.  Users can manage notification preferences. |\n\n\n**3.2 External Interface Requirements**\n\n*   **User Interfaces:**  Web-based interface, responsive design.\n*   **Hardware Interfaces:**  None initially.\n*   **Software Interfaces:**  Modern web browsers, potentially third-party authentication services (future implementation).\n*   **Communications Interfaces:**  HTTPS for secure communication.\n\n**3.3 Non-Functional Requirements**\n\n**3.3.1 Performance Requirements**\n\n*   Response time to user input: ≤ 2 seconds.\n*   Concurrent users: Minimum 1000 (scalable to higher numbers).\n*   Average page load time: ≤ 3 seconds.\n*   API response time: ≤ 1 second.\n\n**3.3.2 Security Requirements**\n\n*   Password encryption using bcrypt or a comparable strong hashing algorithm.\n*   Input validation to prevent SQL injection, cross-site scripting (XSS), and other common web vulnerabilities.  OWASP Top 10 vulnerabilities to be addressed.\n*   Secure protocols (HTTPS) for all data transmission.\n*   Regular security audits and penetration testing.\n*   Implementation of appropriate authentication and authorization mechanisms.\n*   Data encryption at rest and in transit.\n\n**3.3.3 Reliability & Availability**\n\n*   Target uptime: 99.99%.\n*   Regular backups and disaster recovery plan.  Automated backup and recovery mechanisms will be implemented.\n*   Error handling and logging mechanisms to ensure system stability and facilitate debugging.\n\n**3.3.4 Maintainability**\n\n*   Well-documented codebase using version control (e.g., Git).\n*   Modular design for easy maintenance and updates.\n*   Use of design patterns and best practices to improve code quality and maintainability.\n\n**3.3.5 Portability**\n\n*   Responsive design for cross-platform compatibility (desktops, tablets, smartphones).\n*   Code should be written in a platform-agnostic manner to facilitate future porting to other platforms.\n\n**3.3.6 Usability**\n\n*   Clear and intuitive user interface following established UX best practices.\n*   Informative and user-friendly error messages.\n*   Visually appealing design that is consistent with branding guidelines.\n*   User testing and feedback incorporated throughout the development process.\n\n**3.3.7 Accessibility**\n\n*   Compliance with WCAG 2.1 AA guidelines.\n*   Screen reader compatibility.\n*   Sufficient color contrast.\n*   Keyboard navigation support.\n*   Alternative text for images and other non-text elements.\n\n**3.3.8 Scalability**\n\n*   The system architecture should be designed to handle a growing number of users and data.\n*   Load balancing and horizontal scaling techniques should be employed.\n*   Database optimization and caching strategies should be implemented.\n\n\n**4. Conclusion**\n\nThis SRS document provides a comprehensive overview of the requirements for the social networking application. Further details and specifications will be elaborated in subsequent design and implementation documents. This document will be updated as the project progresses and requirements evolve.",
             uml:
             `@startuml
-actor Customer {
-    left to right direction
-}
-actor Administrator {
-    left to right direction
-}
-actor System Administrator {
-    left to right direction
-}
-Customer --> Browsing Products
-Customer --> Adding Products to Cart
-Customer --> Managing Shopping Cart
-Customer --> Checkout Process
-Customer --> Account Management
-Customer --> Viewing Order Status
-Customer --> Providing Feedback
-Administrator --> Managing Products
-Administrator --> Processing Orders
-Administrator --> Managing Inventory
-Administrator --> Managing Users
-Administrator --> Monitoring Key Metrics
-Administrator --> Configuring System Settings
-Administrator --> Generating Reports
-Administrator --> Managing Payment Gateways
-Administrator --> Updating Website Content
-Administrator --> Troubleshooting Issues
-System Administrator --> System Maintenance
-System Administrator --> Security Management
-System Administrator --> Performance Monitoring
-System Administrator --> User Access Control
-System Administrator --> Data Backup and Recovery
-@enduml`,
+              left to right direction
+              skinparam packageStyle rectangle
+
+              actor Customer
+              actor Administrator
+              actor "System Administrator" as SysAdmin
+
+              rectangle "E-Commerce System" {
+                  
+                  package "Shopping" {
+                      Customer --> (Browse Products)
+                      Customer --> (Add Products to Cart)
+                      Customer --> (Manage Shopping Cart)
+                      Customer --> (Checkout)
+                  }
+
+                  package "Account & Orders" {
+                      Customer --> (Manage Account)
+                      Customer --> (View Order Status)
+                      Customer --> (Provide Feedback)
+                  }
+
+                  package "Admin Dashboard" {
+                      Administrator --> (Manage Products)
+                      Administrator --> (Process Orders)
+                      Administrator --> (Manage Inventory)
+                      Administrator --> (Manage Users)
+                      Administrator --> (Monitor Key Metrics)
+                      Administrator --> (Configure System Settings)
+                      Administrator --> (Generate Reports)
+                      Administrator --> (Manage Payment Gateways)
+                      Administrator --> (Update Website Content)
+                      Administrator --> (Troubleshoot Issues)
+                  }
+
+                  package "System Maintenance" {
+                      SysAdmin --> (System Maintenance)
+                      SysAdmin --> (Security Management)
+                      SysAdmin --> (Performance Monitoring)
+                      SysAdmin --> (User Access Control)
+                      SysAdmin --> (Data Backup & Recovery)
+                  }
+
+                  ' Optional relationships
+                  (Checkout) ..> (Manage Shopping Cart) : includes
+                  (Checkout) ..> (Manage Account) : includes
+                  (Provide Feedback) ..> (View Order Status) : extends
+              }
+
+              @enduml`,
 
         };
 
