@@ -29,6 +29,7 @@ app.use("/api/meetings", meetingRoutes);
 
 app.use('/api/ui', uiRoutes);
 
+
 // Serve the outputs folder statically
 app.use('/output', express.static(path.join(__dirname, 'output')));
 
