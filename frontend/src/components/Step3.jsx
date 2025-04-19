@@ -277,7 +277,7 @@ const Step3 = ({ selectedMode, uploadedFile, goBack }) => {
                 setFeatureData2(normalized2);
             }
 
-        }, 500);
+        }, 3000);
     }
 }, [selectedFeature, localFile, selectedMode]);
 
