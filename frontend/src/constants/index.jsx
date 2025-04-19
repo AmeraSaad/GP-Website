@@ -69,7 +69,7 @@ export const checklistItems = [
       "Generate a concise AI-powered summary highlighting decisions, action items, and important discussions.",
   },
   {
-    title: "Document Meeting Minutes",
+    title: "Generate Meeting Minutes",
     description:
       "Automatically create a structured meeting minutes report to keep your team aligned.",
   },
@@ -79,18 +79,18 @@ export const checklistItems = [
       "Identify and structure discussed functional requirements for seamless project planning.",
   },
   {
-    title: "Create an SRS Document",
+    title: "Generate UML Diagrams",
+    description:
+      "Automatically creates clear and structured UML diagrams from text, simplifying system design and communication.",
+  },
+  {
+    title: "Generate an SRS Document",
     description:
       "Produce a detailed Software Requirements Specification (SRS) document for developers to work with.",
   }, {
     title: "Generate UI Design Suggestions (If Applicable)",
     description:
       "Convert discussed UI requirements into initial layout recommendations.",
-  },
-  {
-    title: "Generate UML Diagrams",
-    description:
-      "Automatically creates clear and structured UML diagrams from text, simplifying system design and communication.",
   },
 ];
 

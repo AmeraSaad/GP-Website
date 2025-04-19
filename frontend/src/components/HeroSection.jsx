@@ -1,31 +1,45 @@
+import { useNavigate } from "react-router-dom";
 import video3 from "../assets/video3.mp4";
 import video4 from "../assets/video4.mp4";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+
+  const handleFullPipeline = () => {
+    navigate("/step3", { state: { mode: 1 } });
+  };
+
+  const handleCustomFlow = () => {
+    navigate("/step3", { state: { mode: 2 } });
+  };
+
   return (
     <div className="flex flex-col items-center mt-6 lg:mt-20">
       <h1 className="text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide">
-      AI-Powered Meeting
+        AI-Powered Meeting
         <span className="bg-gradient-to-r from-blue-500 to-purple-800 text-transparent bg-clip-text">
           {" "}
           Insights & UI Prototyping
         </span>
       </h1>
       <p className="mt-10 text-lg text-center text-neutral-500 max-w-4xl">
-      Revolutionize your workflow with our AI-driven platform. Automatically
-      generate meeting minutes, structured SRS documents, and mid-fidelity UI
-      designs—all from your discussions. Turn ideas into reality with seamless automation
+        Revolutionize your workflow with our AI-driven platform. Automatically
+        generate meeting minutes, structured SRS documents, and mid-fidelity UI
+        designs—all from your discussions. Turn ideas into reality with seamless automation
       </p>
       <div className="flex justify-center my-10">
-        <a
-          href="#"
-          className="bg-gradient-to-r from-purple-500 to-blue-800 py-3 px-4 mx-3 rounded-md"
+        <button
+          onClick={handleFullPipeline}
+          className="bg-gradient-to-r from-purple-500 to-blue-800 py-3 px-4 mx-3 rounded-md text-white"
         >
           Start with our Full Pipline
-        </a>
-        <a href="#" className="py-3 px-4 mx-3 rounded-md border">
+        </button>
+        <button
+          onClick={handleCustomFlow}
+          className="py-3 px-4 mx-3 rounded-md border"
+        >
           Choose your own Flow
-        </a>
+        </button>
       </div>
       <div className="flex mt-10 justify-center">
         <video
