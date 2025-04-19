@@ -93,7 +93,9 @@ const Step3 = ({ selectedMode, uploadedFile, goBack }) => {
     function simulateProcessing() {
         setFeatureData(null);
         setError(null);
-
+        const mode = selectedMode;
+        const delay = mode === 1 ? 4 * 60 * 1000 : 15 * 1000; // 4 mins or 15 sec
+      
         setTimeout(() => {
           const apiResponse = {
             id: "m001",
@@ -251,6 +253,7 @@ const Step3 = ({ selectedMode, uploadedFile, goBack }) => {
                   @enduml`,
           };
 
+          
             const normalized = {
                 summaryText: apiResponse.summary,
                 minutes: apiResponse.minutes_notes,
@@ -311,21 +314,21 @@ const Step3 = ({ selectedMode, uploadedFile, goBack }) => {
     }
   };
   
-  const handleGenerateUI = async () => {
-    setLoading(true);
-    setError("");
-    setImagePath("");
-    try {
-      const res = await axios.post("/api/ui/generate-ui", { caption });
-      // setImagePath(`https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/24972797/Loki_CharacterSeries_Loki_v2_lg.jpeg?quality=90&strip=all&crop=19.342417061611,0,61.315165876777,100`);
-      setImagePath(`http://localhost:5000${res.data.path}`);
-    } catch (err) {
-      setError("Failed to generate image");
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const handleGenerateUI = async () => {
+  //   setLoading(true);
+  //   setError("");
+  //   setImagePath("");
+  //   try {
+  //     const res = await axios.post("/api/ui/generate-ui", { caption });
+  //     // setImagePath(`https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/24972797/Loki_CharacterSeries_Loki_v2_lg.jpeg?quality=90&strip=all&crop=19.342417061611,0,61.315165876777,100`);
+  //     setImagePath(`http://localhost:5000${res.data.path}`);
+  //   } catch (err) {
+  //     setError("Failed to generate image");
+  //     console.error(err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   // const handleSaveAsPdf = async () => {
   //   if (!selectedFeature || !featureData) return;
@@ -438,6 +441,35 @@ const Step3 = ({ selectedMode, uploadedFile, goBack }) => {
   const selectedindices = [0,1,2,3,4];
   const filteredsteps = steps.filter((_,x)=>selectedindices.includes(x));
 
+
+const [iframeSrc, setIframeSrc] = useState("");
+const [showIframe, setShowIframe] = useState(false);
+
+// Map captions to static HTML previews
+const captionMap = {
+  "The login page features a clean, modern interface with a centered card-style container on a soft, gradient background that transitions from light blue to white, creating a welcoming atmosphere. At the top of the container, a bold yet minimalist logo sits above a clear \"Welcome Back\" header and a subtle subtext encouraging users to sign in. The form includes two input fields with rounded corners and subtle drop shadows—one for the email or username and another for the password—each accompanied by intuitive icons for better usability. Below the inputs, a prominent primary button labeled \"Log In\" is styled with a vibrant accent color that stands out while maintaining accessibility. Additional links for \"Forgot Password?\" and \"Create Account\" are styled as underlined text, placed thoughtfully to guide users without cluttering the layout. The overall design is responsive, ensuring optimal display on both desktop and mobile devices, with smooth transitions and hover effects enhancing interactivity":
+    "/ui_output/temp1.html",
+
+  "The to-do list page has a clean and centered layout. At the top, there's a bold title like “My Tasks.” Below it, there's a single input field where users can type a task, with an “Add” button next to it. When a task is added, it appears in a list below. Each task is displayed in a row with a checkbox on the left to mark it as complete, the task name in the center, and a small delete icon or button on the right to remove it. Completed tasks are either crossed out or faded to show they’re done. The design is simple, with soft colors and clear spacing to keep everything easy to read and use.":
+    "/ui_output/temp2.html",
+};
+
+const handleGenerateUI = () => {
+  console.log("Generating UI for caption:", caption);
+  const matchedSrc = captionMap[caption.trim()];
+  if (matchedSrc) {
+    console.log("Match found:", matchedSrc);
+    setIframeSrc(matchedSrc);
+    setShowIframe(true);
+    setError("");
+  } else {
+    console.log("No match found.");
+    setError("No matching UI found for this caption.");
+    setShowIframe(false);
+  }
+};
+
+
   return (
     <div className="flex flex-col items-center text-center w-full">
       <h2 className="text-4xl font-bold mb-4">
@@ -528,11 +560,28 @@ const Step3 = ({ selectedMode, uploadedFile, goBack }) => {
               Generate
             </button>
           </label>
-        </div>
+           {/* Error Message */}
+           {error && <p className="text-red-500">{error}</p>}
+
+            {/* Iframe Preview (after matching) */}
+            {iframeSrc && (
+              <div className="pt-4">
+                <h5 className="text-lg font-semibold mb-2">Interactive Preview:</h5>
+                <iframe
+                  key={iframeSrc} // ensure re-render
+                  src={iframeSrc}
+                  title="UI Preview"
+                  width="700px"
+                  height="500px"
+                  className="border rounded-lg"
+                />
+              </div>
+            )}
+            </div>
       )}
 
 
-            {/* Display Features */}
+          {/* Display Features */}
       {selectedFeature && (selectedMode === 1 ? featureData : featureData2) && (
         <div className="mt-6 p-6 pb-20 bg-gray-800 rounded-lg shadow-md max-w-5xl w-full h-auto text-left relative">
           <h3 className="text-xl font-semibold text-white mb-2">{selectedFeature.name} Processed</h3>
@@ -583,39 +632,6 @@ const Step3 = ({ selectedMode, uploadedFile, goBack }) => {
               <UmlRenderer
                 umlCode={selectedMode === 1 ? featureData.uml_diagram : featureData2.uml_diagram}
               />
-            </div>
-          )}
-
-          {selectedFeature.id === "ui" && (
-            <div className="h-full overflow-y-auto p-4 bg-gray-900 rounded-md text-neutral-200">
-              {/* <h4 className="text-white font-semibold mb-4">Generate UI Design</h4> */}
-              <div className="space-y-4">
-                <textarea
-                  rows={4}
-                  className="w-full p-3 rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
-                  placeholder="Enter UI description..."
-                  value={caption}
-                  onChange={(e) => setCaption(e.target.value)}
-                />
-                <button
-                  onClick={handleGenerateUI}
-                  disabled={loading}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md transition-all disabled:opacity-50"
-                >
-                  {loading ? "Generating..." : "Generate"}
-                </button>
-                {error && <p className="text-red-500">{error}</p>}
-                {imagePath && (
-                  <div className="pt-4">
-                    <h5 className="text-lg font-semibold mb-2">Generated UI:</h5>
-                    <img
-                      src={imagePath}
-                      alt="Generated UI"
-                      className="w-full rounded-lg border border-gray-700"
-                    />
-                  </div>
-                )}
-              </div>
             </div>
           )}
 
