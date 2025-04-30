@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-color: #f0f0f0;
+      width: 500px;
+      margin: 0 auto; /* Center the page */
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 30px; /* Increased padding */
+      border-radius: 10px; /* Rounded corners */
+      box-shadow: 10px 10px 20px #c5c5c5, -10px -10px 20px #ffffff; /* Added shadow */
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .login-title {
+      text-align: center;
+      margin-bottom: 30px; /* Increased spacing */
+      font-size: 28px; /* Larger font size */
+      font-weight: bold; /* Bold font */
+      color: #333; /* Darker color */
+    }
+
+    /* From Uiverse.io by ercnersoy */
+    .input {
+      border: none;
+      padding: 1rem;
+      border-radius: 1rem;
+      background: #e8e8e8;
+      box-shadow: 20px 20px 60px #c5c5c5,
+                 -20px -20px 60px #ffffff;
+      transition: 0.3s;
+      width: 90%; /* Make inputs fill the container width */
+      margin-bottom: 15px; /* Increased spacing */
+    }
+
+    .input:focus {
+      outline-color: #e8e8e8;
+      background: #e8e8e8;
+      box-shadow: inset 20px 20px 60px #c5c5c5,
+                 inset -20px -20px 60px #ffffff;
+      transition: 0.3s;
+    }
+
+    /* From Uiverse.io by adamgiebl */
+    .login-button {
+      color: #090909;
+      padding: 0.7em 1.7em;
+      font-size: 18px;
+      border-radius: 0.5em;
+      background: #e8e8e8;
+      cursor: pointer;
+      border: 1px solid #e8e8e8;
+      transition: all 0.3s;
+      box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
+      width: 100%; /* Make button fill the container width */
+    }
+
+    .login-button:hover {
+      border: 1px solid white;
+    }
+
+    .login-button:active {
+      box-shadow: 4px 4px 12px #c5c5c5, -4px -4px 12px #ffffff;
+    }
+
+    .forgot-password-text {
+      text-align: center;
+      margin-top: 15px; /* Increased spacing */
+      font-size: 14px; /* Adjust font size for readability */
+      color: #007bff;
+    }
+
+    .signup-text {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px; /* Adjust font size for readability */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 class="login-title">Login</h2>
+    <form>
+      <input type="email" placeholder="Email" class="input" required>
+      <input type="password" placeholder="Password" class="input" required>
+      <button type="submit" class="login-button">Log In</button>
+    </form>
+    <p class="forgot-password-text">Forgot Password?</p>
+    <p class="signup-text">Don't have an account? <a href="#">Sign up.</a></p>
+  </div>
+</body>
+</html>
