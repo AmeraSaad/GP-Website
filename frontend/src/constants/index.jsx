@@ -13,7 +13,7 @@ export const navItems = [
   { label: "Home", scrollTo: "home" }, // Scrolls to top or navigates first
   { label: "Features", scrollTo: "features" },
   { label: "Workflow", scrollTo: "workflow" },
-  { label: "Start Automation", href: "/run-workflow" },
+  { label: "Start Automation", href: "/start-automation" },
   { label: "Contact Us", href: "/contact" },
 ];
 
