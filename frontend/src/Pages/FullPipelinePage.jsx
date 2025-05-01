@@ -70,11 +70,8 @@ export default function FullPipelinePage() {
     setLoading(true);
     try {
       const res = await runFullPipeline(f);
-      if (res.success) {
-        setOutputs(res.data);
-      } else {
-        setError(res.message || "Unexpected response");
-      }
+      if (res.success) setOutputs(res.data);
+      else setError(res.message || "Unexpected response");
     } catch {
       setError("Failed to process file.");
     } finally {
@@ -82,7 +79,7 @@ export default function FullPipelinePage() {
     }
   };
 
-  // 1) Upload step
+  // Upload Step
   if (!outputs) {
     return (
       <div className="flex flex-col items-center text-center pt-32 space-y-6">
@@ -129,14 +126,28 @@ export default function FullPipelinePage() {
     );
   }
 
-  // 2) Results step
+  // Map of step ID → rendered content
   const contentMap = {
-    summary: outputs.summaryText,
-    minutes: outputs.minutes,
-    requirements: (
-      <ReactMarkdown>{outputs.extracted_requirements}</ReactMarkdown>
+    summary: (
+      <div className="whitespace-pre-wrap text-neutral-200">
+        {outputs.summaryText}
+      </div>
     ),
-    srs: <ReactMarkdown>{outputs.srs_document}</ReactMarkdown>,
+    minutes: (
+      <pre className="whitespace-pre-wrap text-neutral-200">
+        {outputs.minutes}
+      </pre>
+    ),
+    requirements: (
+      <ReactMarkdown className="prose prose-invert text-neutral-200">
+        {outputs.extracted_requirements}
+      </ReactMarkdown>
+    ),
+    srs: (
+      <ReactMarkdown className="prose prose-invert text-neutral-200">
+        {outputs.srs_document}
+      </ReactMarkdown>
+    ),
     uml: <UmlRenderer umlCode={outputs.uml_diagram} />,
   };
 
@@ -148,7 +159,7 @@ export default function FullPipelinePage() {
   };
 
   return (
-    <div className="px-6 py-12 max-w-4xl mx-auto space-y-8">
+    <div className="px-6 py-12 max-w-5xl mx-auto space-y-8">
       {/* Back to Upload */}
       <button
         onClick={() => {
@@ -164,7 +175,7 @@ export default function FullPipelinePage() {
         <span>Back to Upload</span>
       </button>
 
-      {/* Steps grid */}
+      {/* Steps grid (same as Step3) */}
       <div className="grid grid-cols-5 gap-6 justify-center">
         {steps.map((step) => {
           const done = completed.includes(step.id);
@@ -182,6 +193,8 @@ export default function FullPipelinePage() {
                 >
                   {done ? <CheckCircle size={40} /> : step.icon}
                 </button>
+
+                {/* Tooltip */}
                 <div className="absolute bottom-full mb-2 hidden group-hover:flex flex-col items-center w-44 bg-gray-900 text-white text-xs p-2 rounded shadow-lg">
                   {step.description}
                   <Info
@@ -198,14 +211,61 @@ export default function FullPipelinePage() {
         })}
       </div>
 
-      {/* Active step content */}
+      {/* Active step’s output container */}
       {active && (
-        <div className="mt-8 bg-gray-800 p-6 rounded-xl">
-          <h3 className="text-2xl font-semibold mb-4 text-white">
+        <div className="mt-6 p-6 pb-12 bg-gray-800 rounded-lg shadow-md max-w-5xl w-full h-auto text-left relative">
+          {/* Save as PDF button (unchanged) */}
+          <button
+            onClick={async () => {
+              const { jsPDF } = await import("jspdf");
+              const pdf = new jsPDF();
+              const text = (() => {
+                switch (active) {
+                  case "summary":
+                    return outputs.summaryText;
+                  case "minutes":
+                    return outputs.minutes;
+                  case "requirements":
+                    return outputs.extracted_requirements;
+                  case "srs":
+                    return outputs.srs_document;
+                  case "uml":
+                    return outputs.uml_diagram;
+                  default:
+                    return "";
+                }
+              })();
+              const lines = pdf.splitTextToSize(text, 180);
+              pdf.text(lines, 10, 10);
+              pdf.save(`${active}.pdf`);
+            }}
+            className="absolute top-4 right-4 bg-gradient-to-r from-blue-500 to-purple-800 rounded-full w-32 h-8 text-sm text-white hover:brightness-110 transition"
+          >
+            Save as a PDF
+          </button>
+
+          {/* Section title */}
+          <h3 className="text-xl font-semibold text-white mb-4">
             {steps.find((s) => s.id === active).name}
           </h3>
-          <div className="prose prose-invert max-w-none overflow-auto break-words">
-            {contentMap[active]}
+
+          {/* Content box: exact Step3 styling + wrapping + scroll */}
+          <div className="h-full overflow-y-auto p-4 bg-gray-900 rounded-md text-neutral-200 text-sm whitespace-pre-wrap break-words">
+            {active === "requirements" || active === "srs" ? (
+              // markdown-rendered content
+              <ReactMarkdown>
+                {active === "requirements"
+                  ? outputs.extracted_requirements
+                  : outputs.srs_document}
+              </ReactMarkdown>
+            ) : active === "uml" ? (
+              <UmlRenderer umlCode={outputs.uml_diagram} />
+            ) : // plain text / pre for summary & minutes
+            active === "summary" ? (
+              outputs.summaryText
+            ) : (
+              <pre className="whitespace-pre-wrap">{outputs.minutes}</pre>
+            )}
           </div>
         </div>
       )}

@@ -6,7 +6,7 @@ import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import AutomationLanding from "./pages/AutomationPage";
 import FullPipelinePage from "./pages/FullPipelinePage";
-import FeaturePipelinePage from "./pages/FeaturesPage";
+import FeaturePipelinePage from "./pages/FeaturePipelinePage";
 
 const App = () => {
   const scrollToSection = (section) => {
