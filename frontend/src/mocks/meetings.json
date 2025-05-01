@@ -1,0 +1,33 @@
+{
+  "summary": {
+    "success": true,
+    "data": {
+      "meetingRef": "67ffe7965d25ec8709be7643",
+      "summaryText": "Speaker 1 wants to make it easy for people to bleep things out. ...",
+      "_id": "67ffe7995d25ec8709be7645",
+      "createdAt": "2025-04-16T17:23:37.096Z",
+      "updatedAt": "2025-04-16T17:23:37.096Z",
+      "__v": 0
+    },
+    "message": "Summary generated and saved successfully."
+  },
+  "minutes": {
+    "success": true,
+    "meetingId": "67ffec912d229003717f3859",
+    "minutes": "DATE: April 16, 2025\nATTENDEES: Speaker 1\n\n\nSUMMARY\n- ...",
+    "message": "Meeting minutes generated and saved successfully."
+  },
+  "requirements": {
+    "success": true,
+    "data": {
+      "summary_id": "680026f20e2ec9c5978c7c3f",
+      "crew_flow_id": "680026f20e2ec9c5978c7c3f",
+      "requirements": "Based on the provided functional and non-functional requirements ...",
+      "srs_document": "# Software Requirements Specification (SRS) Document\n\n**1. Introduction**\n...",
+      "uml_diagram": "```plantuml\n@startuml\nactor User\n...\n@enduml\n```",
+      "ui_specifications": "The Login Screen features ...",
+      "summary_text": "The team discussed implementing a new user authentication system. ..."
+    },
+    "message": "Data saved successfully!"
+  }
+}
