@@ -81,7 +81,7 @@ class SystemFlow(Flow[SystemState]):
         filepath = os.path.join(OUTPUT_DIR, filename)
 
         with open(filepath, "w", encoding="utf-8") as f:
-            f.write(f"# {filename.replace('_', ' ').title()}\n\n")
+            # f.write(f"# {filename.replace('_', ' ').title()}\n\n")
             f.write(content)
 
         print(f"📂 Output saved: `{filename}`")
@@ -91,18 +91,7 @@ def kickoff():
     # meeting_summary = input("Enter meeting summary: ")
     
     meeting_summary = ("""
-        The GAMMA-J Web Store is a plug-and-play e-commerce solution designed to help small retailers quickly set up and manage online stores. 
-        The system, delivered via a USB key, includes essential features such as customer account management, inventory control, shopping cart
-        functionality, and secure order processing. 
-        It supports multiple user roles—customers, sales personnel, and administrators—each with tailored interfaces for browsing products,
-        managing inventory, and overseeing system operations. Security is a priority, with HTTPS encryption, fraud detection, and automated backups to protect sensitive data.
-        The platform is built on Slackware Linux, Apache, and MySQL, ensuring compatibility with older browsers like Internet Explorer 6/7 and Netscape.
-
-        Key strengths include high availability (99.99%), fast performance (e.g., <1s search times), and a plug-in API for future expansions. 
-        However, challenges remain, such as transitioning from phone orders to the digital system and integrating advanced shipping and analytics features.
-        Designed for portability and ease of use, the GAMMA-J
-        Web Store provides a cost-effective, scalable solution for small businesses entering e-commerce, with room for growth through modular enhancements.
-      """)
+        THEMAS (The Energy Management System) is a software system designed to efficiently monitor and manage the heating and cooling operations of a building through integration with thermostats and HVAC units. The system comprises four primary functions: monitoring temperature, determining utilization of heating/cooling units, system initialization, and generating system reports. It processes data from thermostats, determines when environmental conditions warrant activating HVAC units, manages unit utilization based on predefined parameters, and provides supervisors with operational insights and alarms for out-of-range temperatures. THEMAS runs on Windows NT and assumes basic communication capabilities with thermostats (which report temperature and settings) and HVAC units (which receive ON/OFF commands but do not provide feedback). Its goal is to ensure a reliable, automated climate control environment while offering detailed logs and reports for analysis and optimization.      """)
     flow = SystemFlow()
     flow.state.meeting_summary = meeting_summary
     flow.kickoff()
