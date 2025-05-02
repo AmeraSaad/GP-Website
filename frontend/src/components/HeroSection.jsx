@@ -6,11 +6,11 @@ const HeroSection = () => {
   const navigate = useNavigate();
 
   const handleFullPipeline = () => {
-    navigate("/step3", { state: { mode: 1 } });
+    navigate("/start-automation/full");
   };
 
   const handleCustomFlow = () => {
-    navigate("/step3", { state: { mode: 2 } });
+    navigate("/start-automation/custom");
   };
 
   return (
@@ -25,22 +25,24 @@ const HeroSection = () => {
       <p className="mt-10 text-lg text-center text-neutral-500 max-w-4xl">
         Revolutionize your workflow with our AI-driven platform. Automatically
         generate meeting minutes, structured SRS documents, and mid-fidelity UI
-        designs—all from your discussions. Turn ideas into reality with seamless automation
+        designs—all from your discussions. Turn ideas into reality with seamless
+        automation
       </p>
       <div className="flex justify-center my-10">
         <button
           onClick={handleFullPipeline}
-          className="bg-gradient-to-r from-purple-500 to-blue-800 py-3 px-4 mx-3 rounded-md text-white"
+          className="bg-gradient-to-r from-purple-500 to-blue-800 py-3 px-4 mx-3 rounded-md text-white transition duration-300 hover:scale-105 hover:shadow-lg"
         >
-          Start with our Full Pipline
+          Start with our Full Pipeline
         </button>
         <button
           onClick={handleCustomFlow}
-          className="py-3 px-4 mx-3 rounded-md border"
+          className="py-3 px-4 mx-3 rounded-md border border-white text-white transition duration-300 hover:scale-105 hover:shadow-lg"
         >
           Choose your own Flow
         </button>
       </div>
+
       <div className="flex mt-10 justify-center">
         <video
           autoPlay

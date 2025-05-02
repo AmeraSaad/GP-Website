@@ -2,6 +2,11 @@
 import { PlayCircle, ListChecks } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+import {
+  ArrowLeft,
+} from "lucide-react";
+
+
 export default function AutomationPage() {
   const nav = useNavigate();
   return (
@@ -36,6 +41,16 @@ export default function AutomationPage() {
             Choose a Specific Feature
           </span>
         </div>
+      </div>
+
+      <div className="mt-12">
+        <button
+          onClick={() => window.history.back()}
+          className="flex items-center space-x-2 text-neutral-400 hover:text-white transition"
+        >
+          <ArrowLeft size={20} />
+          <span>Back</span>
+        </button>
       </div>
     </div>
   );

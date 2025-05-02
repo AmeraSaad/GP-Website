@@ -2,7 +2,7 @@
 import React from "react";
 import HeroSection from "../components/HeroSection";
 import FeatureSection from "../components/FeatureSection";
-import Workflow from "../components/Workflow";
+import Workflow from "../components/WorkflowSection";
 import Footer from "../components/Footer";
 
 const Homepage = () => {
