@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { jsPDF } from "jspdf";
+import axios from "axios";
 import UploadFile from "./UploadFile";
 import ReactMarkdown from "react-markdown";
 
@@ -14,27 +15,37 @@ export default function RequirementsFeature({ onBack }) {
     setLoading(true);
     setError("");
     try {
-      // TODO: replace with your real API call
-      const fake = {
-        success: true,
-        data: {
-          extracted_requirements:
-            "**FR-001:** Example requirement.\n\n**NFR-001:** Example non-functional.",
-        },
-      };
-      setOutput(fake.data);
-    } catch {
-      setError("Failed to extract requirements");
+      // 1. Read the summary text from the uploaded .txt file
+      const meeting_summary = await file.text();
+
+      // 2. POST to your backend
+      const res = await axios.post("http://localhost:5000/api/crewai/req", {
+        meeting_summary,
+      });
+
+      if (res.data.success) {
+        // API returns { success: true, data: { extracted_requirements: "..." } }
+        setOutput(res.data.data);
+      } else {
+        setError(res.data.message || "Unexpected API response");
+      }
+    } catch (err) {
+      console.error(err);
+      setError(
+        err.response?.data?.message ||
+          "Failed to extract requirements. Is the server running?"
+      );
     } finally {
       setLoading(false);
     }
   };
 
+  // 1) Show upload form
   if (!output) {
     return (
       <UploadFile
         title="Extract Requirements"
-        prompt="Upload a summary file."
+        prompt="Upload a meeting summary (.txt) file."
         accept="text/plain"
         onUpload={handleUpload}
         onBack={onBack}
@@ -44,6 +55,7 @@ export default function RequirementsFeature({ onBack }) {
     );
   }
 
+  // 2) Display results + “Save as PDF”
   const savePdf = () => {
     const text = output.extracted_requirements;
     const pdf = new jsPDF();
@@ -54,6 +66,7 @@ export default function RequirementsFeature({ onBack }) {
 
   return (
     <div className="px-6 py-12 max-w-5xl mx-auto">
+      {/* Back to upload */}
       <button
         onClick={() => setOutput(null)}
         className="flex items-center space-x-2 text-neutral-400 hover:text-white transition mb-6"
@@ -62,7 +75,9 @@ export default function RequirementsFeature({ onBack }) {
         <span>Back</span>
       </button>
 
+      {/* Output container */}
       <div className="mt-6 p-6 pb-20 bg-gray-800 rounded-lg shadow-md w-full relative">
+        {/* Save as PDF */}
         <button
           onClick={savePdf}
           className="absolute top-4 right-4 bg-gradient-to-r from-blue-500 to-purple-800 rounded-full w-32 h-8 text-sm text-white hover:brightness-110 transition"
@@ -74,7 +89,7 @@ export default function RequirementsFeature({ onBack }) {
           Extract Requirements
         </h3>
 
-        <div className="h-full overflow-y-auto p-4 bg-gray-900 rounded-md text-neutral-200 prose prose-invert text-sm break-words">
+        <div className="h-full overflow-y-auto p-4 bg-gray-900 rounded-md prose prose-invert text-neutral-200 text-sm break-words">
           <ReactMarkdown>{output.extracted_requirements}</ReactMarkdown>
         </div>
       </div>
