@@ -2,7 +2,8 @@
 import React, { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import UploadFile from "./UploadFile";
-import { jsPDF } from "jspdf"; // import once at top
+import { jsPDF } from "jspdf";
+import axios from "axios";
 
 export default function SummaryFeature({ onBack }) {
   const [loading, setLoading] = useState(false);
@@ -13,11 +14,26 @@ export default function SummaryFeature({ onBack }) {
     setLoading(true);
     setError("");
     try {
-      // TODO: replace with your real API call
-      const fake = { success: true, data: { summaryText: "Fake summary..." } };
-      setOutput(fake.data);
-    } catch {
-      setError("Failed to generate summary");
+      // Read the text from the .txt file
+      const transcript = await file.text();
+
+      // Call your backend
+      const res = await axios.post("http://localhost:5000/api/summaries", {
+        transcript,
+      });
+
+      if (res.data.success) {
+        // The API returns data.summaryText
+        setOutput(res.data.data);
+      } else {
+        setError(res.data.message || "Unexpected API response");
+      }
+    } catch (err) {
+      console.error(err);
+      setError(
+        err.response?.data?.message ||
+          "Failed to generate summary. Check your server."
+      );
     } finally {
       setLoading(false);
     }
