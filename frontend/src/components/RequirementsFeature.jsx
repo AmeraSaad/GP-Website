@@ -34,7 +34,7 @@ export default function RequirementsFeature({ onBack }) {
     return (
       <UploadFile
         title="Extract Requirements"
-        prompt="Upload a meeting summary file."
+        prompt="Upload a summary file."
         accept="text/plain"
         onUpload={handleUpload}
         onBack={onBack}

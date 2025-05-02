@@ -31,7 +31,7 @@ export default function UmlFeature({ onBack }) {
     return (
       <UploadFile
         title="UML Diagram"
-        prompt="Upload a meeting summary file."
+        prompt="Upload a summary file."
         accept="text/plain"
         onUpload={handleUpload}
         onBack={onBack}

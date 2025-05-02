@@ -31,7 +31,7 @@ export default function SrsFeature({ onBack }) {
     return (
       <UploadFile
         title="SRS Document"
-        prompt="Upload a meeting summary file."
+        prompt="Upload a summary file."
         accept="text/plain"
         onUpload={handleUpload}
         onBack={onBack}
