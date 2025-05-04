@@ -51,14 +51,6 @@ class ReqCrew:
             llm=groq_llm_1
         )
 
-    @agent
-    def ui_requirement_agent(self) -> Agent:
-        """Agent responsible for extracting UI/UX specific requirements."""
-        return Agent(
-            config=self.agents_config["ui_requirement_agent"],
-            llm=llm2
-        )
-
     @task
     def nlp_task(self) -> Task:
         """Task to preprocess meeting summaries using NLP."""
@@ -78,13 +70,6 @@ class ReqCrew:
         """Task to format the extracted requirements."""
         return Task(
             config=self.tasks_config["formatting_task"],
-        )
-
-    @task
-    def ui_extraction_task(self) -> Task:
-        """Task to extract UI/UX specific requirements."""
-        return Task(
-            config=self.tasks_config["ui_extraction_task"],
         )
 
     @crew
