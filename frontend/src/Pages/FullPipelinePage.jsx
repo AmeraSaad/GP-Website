@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import UmlRenderer from "../components/UmlRenderer";
-import { runFullPipeline } from "../api";
 
 const steps = [
   {
@@ -69,9 +68,22 @@ export default function FullPipelinePage() {
     setError("");
     setLoading(true);
     try {
-      const res = await runFullPipeline(f);
-      if (res.success) setOutputs(res.data);
-      else setError(res.message || "Unexpected response");
+      // Directly call backend
+      const formData = new FormData();
+      formData.append("audio", f);
+      const resp = await fetch(
+        "http://localhost:5000/api/full-pipeline/audio",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const res = await resp.json();
+      if (res.success) {
+        setOutputs(res.data);
+      } else {
+        setError(res.message || "Unexpected response");
+      }
     } catch {
       setError("Failed to process file.");
     } finally {
@@ -79,7 +91,7 @@ export default function FullPipelinePage() {
     }
   };
 
-  // Upload Step
+  // 1) Upload step
   if (!outputs) {
     return (
       <div className="flex flex-col items-center text-center pt-32 space-y-6">
@@ -126,7 +138,7 @@ export default function FullPipelinePage() {
     );
   }
 
-  // Map of step ID → rendered content
+  // Map step IDs → rendered content
   const contentMap = {
     summary: (
       <div className="whitespace-pre-wrap text-neutral-200">
@@ -139,12 +151,12 @@ export default function FullPipelinePage() {
       </pre>
     ),
     requirements: (
-      <ReactMarkdown className="prose prose-invert text-neutral-200">
+      <ReactMarkdown className="text-neutral-200">
         {outputs.extracted_requirements}
       </ReactMarkdown>
     ),
     srs: (
-      <ReactMarkdown className="prose prose-invert text-neutral-200">
+      <ReactMarkdown className="text-neutral-200">
         {outputs.srs_document}
       </ReactMarkdown>
     ),
@@ -175,7 +187,7 @@ export default function FullPipelinePage() {
         <span>Back to Upload</span>
       </button>
 
-      {/* Steps grid (same as Step3) */}
+      {/* Steps grid */}
       <div className="grid grid-cols-5 gap-6 justify-center">
         {steps.map((step) => {
           const done = completed.includes(step.id);
@@ -187,14 +199,11 @@ export default function FullPipelinePage() {
                   className={`
                     flex flex-col items-center justify-center
                     w-24 h-24 rounded-full text-white font-semibold shadow-md transition-all
-                    ${step.color}
-                    ${done ? "opacity-70" : "hover:opacity-100"}
+                    ${step.color} ${done ? "opacity-70" : "hover:opacity-100"}
                   `}
                 >
                   {done ? <CheckCircle size={40} /> : step.icon}
                 </button>
-
-                {/* Tooltip */}
                 <div className="absolute bottom-full mb-2 hidden group-hover:flex flex-col items-center w-44 bg-gray-900 text-white text-xs p-2 rounded shadow-lg">
                   {step.description}
                   <Info
@@ -213,8 +222,8 @@ export default function FullPipelinePage() {
 
       {/* Active step’s output container */}
       {active && (
-        <div className="mt-6 p-6 pb-12 bg-gray-800 rounded-lg shadow-md max-w-5xl w-full h-auto text-left relative">
-          {/* Save as PDF button (unchanged) */}
+        <div className="relative mt-6 p-6 pb-12 bg-gray-800 rounded-lg shadow-md w-full">
+          {/* Save as PDF */}
           <button
             onClick={async () => {
               const { jsPDF } = await import("jspdf");
@@ -249,23 +258,9 @@ export default function FullPipelinePage() {
             {steps.find((s) => s.id === active).name}
           </h3>
 
-          {/* Content box: exact Step3 styling + wrapping + scroll */}
-          <div className="h-full overflow-y-auto p-4 bg-gray-900 rounded-md text-neutral-200 text-sm whitespace-pre-wrap break-words">
-            {active === "requirements" || active === "srs" ? (
-              // markdown-rendered content
-              <ReactMarkdown>
-                {active === "requirements"
-                  ? outputs.extracted_requirements
-                  : outputs.srs_document}
-              </ReactMarkdown>
-            ) : active === "uml" ? (
-              <UmlRenderer umlCode={outputs.uml_diagram} />
-            ) : // plain text / pre for summary & minutes
-            active === "summary" ? (
-              outputs.summaryText
-            ) : (
-              <pre className="whitespace-pre-wrap">{outputs.minutes}</pre>
-            )}
+          {/* Content box with max-height and scroll */}
+          <div className="max-h-[500px] overflow-y-auto p-4 bg-gray-900 rounded-md text-neutral-200 text-sm whitespace-pre-wrap break-words">
+            {contentMap[active]}
           </div>
         </div>
       )}
