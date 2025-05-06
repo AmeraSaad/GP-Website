@@ -28,7 +28,7 @@ def run_crewai(summary: MeetingSummary):
         flow.state.extracted_requirements = ""
         flow.state.srs_document = ""
         flow.state.uml_diagram = ""
-        flow.state.ui_specifications = "" 
+        # flow.state.ui_specifications = "" 
 
         # Run the CrewAI flow (synchronously)
         flow.kickoff()
@@ -37,7 +37,7 @@ def run_crewai(summary: MeetingSummary):
             "extracted_requirements": flow.state.extracted_requirements,
             "srs_document": flow.state.srs_document,
             "uml_diagram": flow.state.uml_diagram,
-            "ui_specifications": flow.state.ui_specifications
+            # "ui_specifications": flow.state.ui_specifications
         }
         return response
     except Exception as e:

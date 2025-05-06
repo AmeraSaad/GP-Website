@@ -10,7 +10,7 @@ load_dotenv()
 
 groq_llm_1= LLM(
     model="groq/llama3-8b-8192",
-    temperature=0.1,
+    # temperature=0,
     api_key = os.getenv("GROQ_API_KEY1")
 )
 

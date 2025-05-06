@@ -9,7 +9,7 @@ from crewai.flow.flow import Flow, listen, or_, start
 from crews.req_crew.req_crew import ReqCrew
 from crews.srs_crew.srs_crew import SrsCrew
 from crews.models_crew.models_crew import ModelsCrew
-from crews.ui_req.ui_req import UIReqCrew
+# from crews.ui_req.ui_req import UIReqCrew
 
 import os
 from datetime import datetime
@@ -23,7 +23,7 @@ class SystemState(BaseModel):
     extracted_requirements: str = ""
     srs_document: str = ""
     uml_diagram: str = ""
-    ui_specifications: str = ""
+    # ui_specifications: str = ""
 
 
 class SystemFlow(Flow[SystemState]):
@@ -64,17 +64,17 @@ class SystemFlow(Flow[SystemState]):
         self.state.uml_diagram = result.raw
         # self.save_output("uml_diagram.md", self.state.uml_diagram)
 
-    @listen(extract_requirements)
-    def generate_ui_specifications(self):
-        """Step 3: Generate UI specifications and component layouts"""
-        print("🎨 Generating UI specifications and component layouts...")
-        result = (
-            UIReqCrew()
-            .crew()
-            .kickoff(inputs={"meeting_summary": self.state.meeting_summary, "requirements": self.state.extracted_requirements})
-        )
-        self.state.ui_specifications = result.raw
-        # self.save_output("ui_specifications.md", self.state.ui_specifications)
+    # @listen(extract_requirements)
+    # def generate_ui_specifications(self):
+    #     """Step 3: Generate UI specifications and component layouts"""
+    #     print("🎨 Generating UI specifications and component layouts...")
+    #     result = (
+    #         UIReqCrew()
+    #         .crew()
+    #         .kickoff(inputs={"meeting_summary": self.state.meeting_summary, "requirements": self.state.extracted_requirements})
+    #     )
+    #     self.state.ui_specifications = result.raw
+    #     # self.save_output("ui_specifications.md", self.state.ui_specifications)
 
     # def save_output(self, filename, content):
     #     """Overwrite output in a Markdown file"""
