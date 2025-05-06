@@ -71,7 +71,7 @@ const processMeeting = async (req, res) => {
     const result = {
       meetingId: meetingDoc._id,
       summaryId: newSummary._id,
-      transcript: meetingDoc.transcript,
+      // transcript: meetingDoc.transcript,
       summaryText: newSummary.summaryText,
       minutes: meetingDoc.minutes,
       extracted_requirements: crewAIOutputDoc.extracted_requirements,

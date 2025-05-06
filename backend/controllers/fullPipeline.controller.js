@@ -1,53 +1,73 @@
+const express = require('express');
+const multer = require('multer');
+const fs = require('fs');
 const axios = require('axios');
+const { AssemblyAI } = require('assemblyai');
+
+const app = express();
+const port = 3000;
+
 const API_KEY = process.env.ASSEMBLYAI_API_KEY;
 
-// Helper to poll transcription status
-async function pollTranscription(id) {
-  const url = `https://api.assemblyai.com/v2/transcript/${id}`;
-  while (true) {
-    const resp = await axios.get(url, { headers: { authorization: API_KEY } });
-    const { status } = resp.data;
-    if (status === 'completed' || status === 'error') {
-      return resp.data;
-    }
-    // wait 3 seconds before polling again
-    await new Promise((r) => setTimeout(r, 3000));
-  }
-}
+const client = new AssemblyAI({
+  apiKey: API_KEY,
+});
 
-// Single endpoint: upload, transcribe, poll, return final result
-exports.uploadAndTranscribe = async (req, res) => {
+const upload = multer({ dest: 'uploads/' });
+
+app.post('/transcribe', upload.single('audio'), async (req, res) => {
   try {
-    if (!req.file) return res.status(400).json({ error: 'No audio file provided.' });
+    const filePath = req.file.path;
 
+    // 1) upload to AssemblyAI
+    const fileStream = fs.createReadStream(filePath);
     const uploadResp = await axios.post(
       'https://api.assemblyai.com/v2/upload',
-      req.file.buffer,
+      fileStream,
       {
         headers: {
           authorization: API_KEY,
-          'Content-Type': 'application/octet-stream'
-        }
+          'transfer-encoding': 'chunked',
+        },
       }
     );
     const audio_url = uploadResp.data.upload_url;
 
-    const transResp = await axios.post(
-      'https://api.assemblyai.com/v2/transcript',
-      { audio_url, speaker_labels: true },
-      { headers: { authorization: API_KEY, 'Content-Type': 'application/json' } }
+    // 2) get the transcript
+    const transcript = await client.transcripts.create({
+      audio_url,
+      speaker_labels: true,
+    });
+
+    // 3) map into simple objects
+    const result = transcript.utterances.map(u => ({
+      speaker: u.speaker,
+      text: u.text,
+    }));
+    
+    // ←—— HERE’S THE CHANGE ——→
+    const textLines = result
+      .map(u => `speaker ${u.speaker}: ${u.text}`)
+      .join('\n');
+
+    fs.writeFileSync('transcript.txt', textLines, 'utf8');
+
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    res.setHeader(
+      'Content-Disposition',
+      'attachment; filename="transcript.txt"'
     );
-    const transcriptId = transResp.data.id;
+    res.send(textLines);
 
-    const finalResult = await pollTranscription(transcriptId);
-    if (finalResult.status === 'error') {
-      return res.status(500).json({ error: 'Transcription failed', details: finalResult });
-    }
-
-    res.json(finalResult);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: error.message });
+    // cleanup
+    fs.unlinkSync(filePath);
+  } catch (err) {
+    console.error(err.response?.data || err.message);
+    res.status(500).json({ error: 'Transcription failed' });
   }
-};
+});
 
+
+app.listen(port, () => {
+  console.log(`API running at http://localhost:${port}`);
+});
