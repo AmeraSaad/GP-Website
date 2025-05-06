@@ -51,7 +51,7 @@ const processMeeting = async (req, res) => {
       });
     }
     
-    const { extracted_requirements, srs_document, uml_diagram, ui_specifications} = crewAIResponse.data;
+    const { extracted_requirements, srs_document, uml_diagram} = crewAIResponse.data;  //, ui_specifications
     
     // 5. Create a new CrewAIOutput document linked to the summary
     const crewAIOutputDoc = new CrewAIOutput({
@@ -59,7 +59,7 @@ const processMeeting = async (req, res) => {
       extracted_requirements,
       srs_document,
       uml_diagram,
-      ui_specifications,
+      // ui_specifications,
     });
     await crewAIOutputDoc.save();
     
@@ -77,7 +77,7 @@ const processMeeting = async (req, res) => {
       extracted_requirements: crewAIOutputDoc.extracted_requirements,
       srs_document: crewAIOutputDoc.srs_document,
       uml_diagram: crewAIOutputDoc.uml_diagram,
-      ui_specifications: crewAIOutputDoc.ui_specifications
+      // ui_specifications: crewAIOutputDoc.ui_specifications
     };
     
     // Return the in-memory objects without re-querying the database
