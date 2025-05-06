@@ -27,12 +27,12 @@ formatting_agent:
   backstory: >
     Responsible for formatting extracted requirements for easy readability.
 
-ui_requirement_agent:
-  role: >
-    UI Design Requirements Extraction Agent
-  goal: >
-    Extract and analyze UI/UX specific requirements from the processed text, focusing on user interface design elements, user experience flows, and visual design specifications.
-  backstory: >
-    An expert in UI/UX design and requirements analysis, specialized in identifying and categorizing interface-related requirements.
-    Skilled in understanding user interaction patterns, accessibility needs, and visual design specifications.
-    Ensures all UI requirements are properly documented with clear specifications for implementation.
+# ui_requirement_agent:
+#   role: >
+#     UI Design Requirements Extraction Agent
+#   goal: >
+#     Extract and analyze UI/UX specific requirements from the processed text, focusing on user interface design elements, user experience flows, and visual design specifications.
+#   backstory: >
+#     An expert in UI/UX design and requirements analysis, specialized in identifying and categorizing interface-related requirements.
+#     Skilled in understanding user interaction patterns, accessibility needs, and visual design specifications.
+#     Ensures all UI requirements are properly documented with clear specifications for implementation.
