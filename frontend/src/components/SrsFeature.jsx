@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { ArrowLeft, Download } from "lucide-react";
 import { jsPDF } from "jspdf";
 import axios from "axios";
 import UploadFile from "./UploadFile";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import html2canvas from "html2canvas";
 
 export default function SrsFeature({ onBack }) {
   const [loading, setLoading] = useState(false);
   const [output, setOutput] = useState(null);
   const [error, setError] = useState("");
   const [pdfLoading, setPdfLoading] = useState(false);
+
+  const markdownRef = useRef(null);
 
   const handleUpload = async (file) => {
     setLoading(true);
@@ -60,35 +63,38 @@ export default function SrsFeature({ onBack }) {
   const savePdf = async () => {
     setPdfLoading(true);
     try {
-      const text = output.srs_document;
+      const element = markdownRef.current;
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: "#ffffff"
+      });
+      
+      const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "mm",
         format: "a4",
       });
       
-      // Set font and size
-      pdf.setFont("helvetica", "normal");
-      pdf.setFontSize(11);
+      const imgWidth = 210; // A4 width in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
       
-      // Add title
-      pdf.setFontSize(16);
-      pdf.text("Software Requirements Specification", 20, 20);
-      pdf.setFontSize(11);
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
       
-      // Split text into lines and add to PDF
-      const lines = pdf.splitTextToSize(text, 170);
-      let y = 30;
-      const lineHeight = 7;
+      // If content is longer than one page, add new pages
+      let heightLeft = imgHeight;
+      let position = 0;
       
-      lines.forEach(line => {
-        if (y > 270) { // Check if we need a new page
+      while (heightLeft > 0) {
+        position = heightLeft - 297; // 297mm is A4 height
+        if (heightLeft > 297) {
           pdf.addPage();
-          y = 20;
+          pdf.addImage(imgData, 'PNG', 0, -position, imgWidth, imgHeight);
         }
-        pdf.text(line, 20, y);
-        y += lineHeight;
-      });
+        heightLeft -= 297;
+      }
       
       pdf.save("srs-document.pdf");
     } catch (err) {
@@ -124,7 +130,7 @@ export default function SrsFeature({ onBack }) {
 
         <h3 className="text-2xl font-semibold text-white mb-6">SRS Document</h3>
 
-        <div className="h-full overflow-y-auto p-6 bg-gray-50 rounded-md prose prose-gray max-w-none text-gray-700 text-sm break-words">
+        <div ref={markdownRef} className="h-full overflow-y-auto p-6 bg-white rounded-md prose prose-gray max-w-none text-gray-700 text-sm break-words">
           <ReactMarkdown 
             remarkPlugins={[remarkGfm]}
             components={{
