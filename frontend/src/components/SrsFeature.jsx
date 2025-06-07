@@ -87,7 +87,7 @@ export default function SrsFeature({ onBack }) {
 
         <h3 className="text-xl font-semibold text-white mb-4">SRS Document</h3>
 
-        <div className="h-full overflow-y-auto p-4 bg-gray-900 rounded-md prose prose-invert text-neutral-200 text-sm break-words">
+        <div className="h-full overflow-y-auto p-4 bg-gray-50 rounded-md prose prose-gray max-w-none text-gray-700 text-sm break-words">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {output.srs_document}
           </ReactMarkdown>
