@@ -151,14 +151,18 @@ export default function FullPipelinePage() {
       </pre>
     ),
     requirements: (
-      <ReactMarkdown className="text-neutral-200">
-        {outputs.extracted_requirements}
-      </ReactMarkdown>
+      <div className="text-neutral-200">
+        <ReactMarkdown>
+          {outputs.extracted_requirements}
+        </ReactMarkdown>
+      </div>
     ),
     srs: (
-      <ReactMarkdown className="text-neutral-200">
-        {outputs.srs_document}
-      </ReactMarkdown>
+      <div className="text-neutral-200">
+        <ReactMarkdown>
+          {outputs.srs_document}
+        </ReactMarkdown>
+      </div>
     ),
     uml: <UmlRenderer umlCode={outputs.uml_diagram} />,
   };
@@ -220,7 +224,7 @@ export default function FullPipelinePage() {
         })}
       </div>
 
-      {/* Active step’s output container */}
+      {/* Active step's output container */}
       {active && (
         <div className="relative mt-6 p-6 pb-12 bg-gray-800 rounded-lg shadow-md w-full">
           {/* Save as PDF */}
