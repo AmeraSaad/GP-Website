@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import UmlRenderer from "../components/UmlRenderer";
+import remarkGfm from "remark-gfm";
 
 const steps = [
   {
@@ -152,14 +153,12 @@ export default function FullPipelinePage() {
     ),
     requirements: (
       <div className="text-neutral-200">
-        <ReactMarkdown>
-          {outputs.extracted_requirements}
-        </ReactMarkdown>
+        <ReactMarkdown>{outputs.extracted_requirements}</ReactMarkdown>
       </div>
     ),
     srs: (
       <div className="text-neutral-200">
-        <ReactMarkdown>
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
           {outputs.srs_document}
         </ReactMarkdown>
       </div>
