@@ -15,6 +15,7 @@ import {
 import ReactMarkdown from "react-markdown";
 import UmlRenderer from "../components/UmlRenderer";
 import remarkGfm from "remark-gfm";
+import MarkdownRenderer from "../components/MarkdownRenderer";
 
 const steps = [
   {
@@ -152,15 +153,13 @@ export default function FullPipelinePage() {
       </pre>
     ),
     requirements: (
-      <div className="text-neutral-200">
-        <ReactMarkdown>{outputs.extracted_requirements}</ReactMarkdown>
+      <div className="bg-white text-gray-900 p-4 rounded-lg">
+        <MarkdownRenderer content={outputs.extracted_requirements} />
       </div>
     ),
     srs: (
-      <div className="text-neutral-200">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
-          {outputs.srs_document}
-        </ReactMarkdown>
+      <div className="bg-white text-gray-900 p-4 rounded-lg">
+        <MarkdownRenderer content={outputs.srs_document} />
       </div>
     ),
     uml: <UmlRenderer umlCode={outputs.uml_diagram} />,
@@ -262,7 +261,7 @@ export default function FullPipelinePage() {
           </h3>
 
           {/* Content box with max-height and scroll */}
-          <div className="max-h-[500px] overflow-y-auto p-4 bg-gray-900 rounded-md text-neutral-200 text-sm whitespace-pre-wrap break-words">
+          <div className="max-h-[500px] overflow-y-auto  rounded-md text-neutral-200 text-sm whitespace-pre-wrap break-words">
             {contentMap[active]}
           </div>
         </div>
