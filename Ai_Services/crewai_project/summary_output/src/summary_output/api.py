@@ -63,7 +63,10 @@ def generate_srs(summary: MeetingSummary):
         req_result = ReqCrew().crew().kickoff(inputs={"meeting_summary": summary.meeting_summary})
         extracted_requirements = req_result.raw
 
-        srs_result = SrsCrew().crew().kickoff(inputs={"requirements": extracted_requirements})
+        srs_result = SrsCrew().crew().kickoff(inputs={
+            "requirements": extracted_requirements,
+            "meeting_summary": summary.meeting_summary
+        })
 
         return {
             "extracted_requirements": extracted_requirements,
