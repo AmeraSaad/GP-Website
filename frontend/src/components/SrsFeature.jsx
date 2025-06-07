@@ -4,6 +4,7 @@ import { jsPDF } from "jspdf";
 import axios from "axios";
 import UploadFile from "./UploadFile";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function SrsFeature({ onBack }) {
   const [loading, setLoading] = useState(false);
@@ -87,7 +88,9 @@ export default function SrsFeature({ onBack }) {
         <h3 className="text-xl font-semibold text-white mb-4">SRS Document</h3>
 
         <div className="h-full overflow-y-auto p-4 bg-gray-900 rounded-md prose prose-invert text-neutral-200 text-sm break-words">
-          <ReactMarkdown>{output.srs_document}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {output.srs_document}
+          </ReactMarkdown>
         </div>
       </div>
     </div>
