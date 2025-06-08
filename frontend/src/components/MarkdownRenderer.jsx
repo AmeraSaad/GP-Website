@@ -30,7 +30,7 @@ export default function MarkdownRenderer({ content }) {
           <p className="mb-4 leading-relaxed" {...props} />
         ),
         ul: ({ node, ...props }) => (
-          <ul className="list-disc pl-6 mb-4" {...props} />
+          <ul className="list-disc pl-6" {...props} />
         ),
         ol: ({ node, ...props }) => (
           <ol className="list-decimal pl-6 mb-4" {...props} />
