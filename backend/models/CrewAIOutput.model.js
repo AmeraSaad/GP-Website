@@ -18,10 +18,10 @@ const CrewAIOutputSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
-  ui_specifications: {   
-    type: String,
-    default: '',
-  }
+  // ui_specifications: {   
+  //   type: String,
+  //   default: '',
+  // }
 },
   {
     timestamps: true,

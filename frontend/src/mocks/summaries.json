@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "data": {
+    "meetingRef": "67ffe7965d25ec8709be7643",
+    "summaryText": "Speaker 1 wants to make it easy for people to bleep things out. ....",
+    "_id": "67ffe7995d25ec8709be7645",
+    "createdAt": "2025-04-16T17:23:37.096Z",
+    "updatedAt": "2025-04-16T17:23:37.096Z",
+    "__v": 0
+  },
+  "message": "Summary generated and saved successfully."
+}

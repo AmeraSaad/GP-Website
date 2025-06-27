@@ -9,7 +9,9 @@ const uiDesignRoutes = require("./routes/uIDesign.routes");
 const summaryRoutes = require("./routes/summary.routes");
 const minutesRoutes = require("./routes/minutes.routes");
 const meetingRoutes = require("./routes/meeting.routes");
-
+const fullPipelineRoutes = require('./routes/fullPipeline.routes');
+const arabicSummaryRoutes = require('./routes/arabicSummary.routes');
+const arabicMinutesRoutes = require('./routes/arabicMinutes.routes');
 const uiRoutes = require('./routes/uiImg.routes');
 
 dotenv.config();
@@ -26,6 +28,10 @@ app.use("/api/ui-design", uiDesignRoutes);
 app.use("/api/summaries", summaryRoutes);
 app.use("/api/minutes", minutesRoutes);
 app.use("/api/meetings", meetingRoutes);
+app.use("/api/arabic-summaries", arabicSummaryRoutes);
+app.use("/api/arabic-minutes", arabicMinutesRoutes);
+// new audio→transcript→full pipeline
+app.use('/api/full-pipeline', fullPipelineRoutes);
 
 app.use('/api/ui', uiRoutes);
 
