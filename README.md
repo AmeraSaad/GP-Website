@@ -1,4 +1,4 @@
-# AI-Powered Meeting Insights & UI Prototyping Platform
+# Automated Meeting Minutes and Software Design Assistant 
 
 ## Overview
 
