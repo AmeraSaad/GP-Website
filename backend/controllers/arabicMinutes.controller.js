@@ -13,7 +13,7 @@ const generateArabicMinutes = async (req, res) => {
 
     // 2. Call the Arabic minutes endpoint
     const arabicMinutesUrl = process.env.ARABIC_summaryMinutes_URL || "https://a8cd-34-53-23-6.ngrok-free.app";
-    const arabicResponse = await axios.post(`${arabicMinutesUrl}/Arabic_Summary_Minutes`, { transcript });
+    const arabicResponse = await axios.post(`${arabicMinutesUrl}/summaryMinutes`, { transcript });
     
     if (!arabicResponse.data || !arabicResponse.data.minutes) {
       return res.status(500).json({ 
