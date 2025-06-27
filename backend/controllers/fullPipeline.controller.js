@@ -69,7 +69,7 @@ const processAudioToOutput = async (req, res) => {
     console.error("Error in full audio pipeline:", error);
     return res.status(500).json({ success: false, message: error.message });
   }
-});
+};
 
 module.exports = {
   uploadMiddleware: upload.single("audio"),
